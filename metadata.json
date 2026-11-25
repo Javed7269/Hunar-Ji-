@@ -1,0 +1,6 @@
+{
+  "name": "Hunar Ji",
+  "description": "Multi-role shopping and local services marketplace connecting Customers, Mechanics (Mistri Ji), Sellers, Delivery Partners, and Admin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
