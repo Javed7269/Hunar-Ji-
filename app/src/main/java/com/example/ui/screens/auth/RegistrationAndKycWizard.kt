@@ -2,6 +2,9 @@ package com.example.ui.screens.auth
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.Intent
+import android.net.Uri
+import android.location.Geocoder
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -102,11 +105,14 @@ import com.example.ui.theme.TextMuted
 import com.example.ui.theme.TextPrimary
 import com.example.ui.theme.TextSecondary
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 @Composable
 fun RegistrationAndKycWizard(
@@ -284,40 +290,82 @@ fun RegistrationAndKycWizard(
         }
     }
 
+    fun updateAddressFromLocation(location: android.location.Location?) {
+        if (location == null) {
+            errorMsg = "Current location could not be detected. Turn on device location and try again."
+            return
+        }
+        gpsLocation = "${location.latitude}, ${location.longitude}"
+        scope.launch {
+            val address = withContext(Dispatchers.IO) {
+                try {
+                    @Suppress("DEPRECATION")
+                    Geocoder(context, Locale.getDefault()).getFromLocation(location.latitude, location.longitude, 1)?.firstOrNull()
+                } catch (_: Exception) {
+                    null
+                }
+            }
+            if (address != null) {
+                villageTown = address.subLocality ?: address.locality ?: villageTown
+                areaLocality = address.thoroughfare ?: address.subThoroughfare ?: areaLocality
+                city = address.locality ?: address.subAdminArea ?: city
+                district = address.subAdminArea ?: district
+                state = address.adminArea ?: state
+                pincode = address.postalCode ?: pincode
+            }
+        }
+    }
+
     val gpsLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
             try {
-                LocationServices.getFusedLocationProviderClient(context).lastLocation
-                    .addOnSuccessListener { loc ->
-                        gpsLocation = if (loc != null) {
-                            "${"%.4f".format(loc.latitude)}, ${"%.4f".format(loc.longitude)}"
-                        } else {
-                            "GPS Active ($city, $district)"
-                        }
-                    }
+                LocationServices.getFusedLocationProviderClient(context)
+                    .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token)
+                    .addOnSuccessListener(::updateAddressFromLocation)
+                    .addOnFailureListener { errorMsg = it.localizedMessage ?: "Unable to get current location." }
             } catch (_: SecurityException) {
+                errorMsg = "Location permission is required."
             }
         }
     }
 
     fun captureGps() {
-        val ok = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        if (ok) {
+        val hasPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (!hasPermission) {
+            gpsLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            return
+        }
+        try {
+            LocationServices.getFusedLocationProviderClient(context)
+                .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token)
+                .addOnSuccessListener(::updateAddressFromLocation)
+                .addOnFailureListener { errorMsg = it.localizedMessage ?: "Unable to get current location." }
+        } catch (_: SecurityException) {
+            errorMsg = "Location permission is required."
+        }
+    }
+
+    fun openCurrentLocationInMaps() {
+        val parts = gpsLocation.split(",")
+        val latitude = parts.getOrNull(0)?.trim()?.toDoubleOrNull()
+        val longitude = parts.getOrNull(1)?.trim()?.toDoubleOrNull()
+        if (latitude == null || longitude == null) {
+            errorMsg = "Capture your current location first."
+            return
+        }
+        val mapUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude(Current%20Location)")
+        val mapsIntent = Intent(Intent.ACTION_VIEW, mapUri).setPackage("com.google.android.apps.maps")
+        try {
+            context.startActivity(mapsIntent)
+        } catch (_: Exception) {
             try {
-                LocationServices.getFusedLocationProviderClient(context).lastLocation
-                    .addOnSuccessListener { loc ->
-                        gpsLocation = if (loc != null) {
-                            "${"%.4f".format(loc.latitude)}, ${"%.4f".format(loc.longitude)}"
-                        } else {
-                            "GPS Verified ($city, $district)"
-                        }
-                    }
-            } catch (_: SecurityException) {
+                context.startActivity(Intent(Intent.ACTION_VIEW, mapUri))
+            } catch (_: Exception) {
+                errorMsg = "No map application is available on this device."
             }
-        } else {
-            gpsLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
     }
 
@@ -846,7 +894,8 @@ fun RegistrationAndKycWizard(
                                     city = city, onCity = { city = it },
                                     pincode = pincode, onPincode = { pincode = it },
                                     gpsLocation = gpsLocation,
-                                    onCaptureGps = ::captureGps
+                                    onCaptureGps = ::captureGps,
+                                    onOpenMaps = ::openCurrentLocationInMaps
                                 )
                             }
 
