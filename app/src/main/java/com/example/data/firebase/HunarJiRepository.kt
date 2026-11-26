@@ -1918,7 +1918,7 @@ class HunarJiRepository(
         termsAccepted: Boolean
     ): Result<KycApplication> {
         val uid = auth.currentUser?.uid ?: return Result.failure(IllegalStateException("Sign in required before submitting registration"))
-        val email = (application.email.ifBlank { auth.currentUser?.email ?: "" }).trim().take(160)
+        val email = application.email.trim().take(160)
         val role = application.role.uppercase().let {
             if (it in listOf("CUSTOMER", "MECHANIC", "SELLER", "DELIVERY")) it else "CUSTOMER"
         }
