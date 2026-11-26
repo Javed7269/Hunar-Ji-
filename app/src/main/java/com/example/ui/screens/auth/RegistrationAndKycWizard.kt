@@ -256,8 +256,6 @@ fun RegistrationAndKycWizard(
     }
 
     // OTP state
-    var generatedOtp by remember { mutableStateOf<String?>(null) }
-    var otpInput by remember { mutableStateOf("") }
     var mobileOtpVerified by remember { mutableStateOf(existingKyc?.mobileOtpVerified ?: false) }
 
     val activeUid = Firebase.auth.currentUser?.uid ?: "draft_user"
@@ -1017,34 +1015,11 @@ fun RegistrationAndKycWizard(
                                             )
                                         }
                                         if (!mobileOtpVerified) {
-                                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                                                OutlinedButton(
-                                                    onClick = {
-                                                        val otp = CredentialSecurityHelper.generateSecureOtp()
-                                                        generatedOtp = otp
-                                                        infoMsg = "OTP sent to $mobile (Verification Code: $otp)"
-                                                    }
-                                                ) {
-                                                    Text(if (generatedOtp == null) "Send OTP" else "Resend")
-                                                }
-                                                OutlinedTextField(
-                                                    value = otpInput,
-                                                    onValueChange = { otpInput = it.filter(Char::isDigit).take(6) },
-                                                    label = { Text("6-digit OTP") },
-                                                    singleLine = true,
-                                                    modifier = Modifier.weight(1f)
-                                                )
-                                                Button(
-                                                    onClick = {
-                                                        if (generatedOtp != null && otpInput == generatedOtp) {
-                                                            mobileOtpVerified = true
-                                                            errorMsg = null
-                                                        } else {
-                                                            errorMsg = "Invalid OTP. Check the verification code sent to $mobile."
-                                                        }
-                                                    }
-                                                ) { Text("Verify") }
-                                            }
+                                            Text(
+                                                "SMS verification will be enabled after the Admin configures a real SMS provider.",
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = TextSecondary
+                                            )
                                         }
                                     }
                                 }
