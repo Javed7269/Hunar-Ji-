@@ -424,6 +424,10 @@ fun AuthScreen(
         }
     }
 
+    LaunchedEffect(externalError) {
+        if (!externalError.isNullOrBlank()) isLoading = false
+    }
+
     if (showRegistrationWizard) {
         var stagedApp by remember { mutableStateOf<KycApplication?>(null) }
         var stagedPassword by remember { mutableStateOf("") }
@@ -699,7 +703,6 @@ fun AuthScreen(
                                 RegistrationDraftStore.saveRememberedLogin(context, rememberMe, mobileDigits)
                             }
                             onPreparePasswordLogin(mobileDigits, password)
-                            isLoading = false
                         },
                         enabled = !isLoading,
                         modifier = Modifier
