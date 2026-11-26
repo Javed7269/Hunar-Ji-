@@ -972,6 +972,8 @@ fun RegistrationAndKycWizard(
                                     houseNo = houseNo, onHouseNo = { houseNo = it },
                                     streetRoad = streetRoad, onStreetRoad = { streetRoad = it },
                                     villageTown = villageTown, onVillageTown = { villageTown = it },
+                                    postOffice = postOffice, onPostOffice = { postOffice = it },
+                                    blockName = blockName, onBlockName = { blockName = it },
                                     areaLocality = areaLocality, onAreaLocality = { areaLocality = it },
                                     landmark = landmark, onLandmark = { landmark = it },
                                     state = state, onState = { state = it },
@@ -979,7 +981,8 @@ fun RegistrationAndKycWizard(
                                     city = city, onCity = { city = it },
                                     pincode = pincode, onPincode = { pincode = it },
                                     gpsLocation = gpsLocation,
-                                    onCaptureGps = ::captureGps
+                                    onCaptureGps = ::captureGps,
+                                    onOpenMaps = ::openCurrentLocationInMaps
                                 )
                             }
 
@@ -1004,6 +1007,8 @@ fun RegistrationAndKycWizard(
                                     houseNo = houseNo, onHouseNo = { houseNo = it },
                                     streetRoad = streetRoad, onStreetRoad = { streetRoad = it },
                                     villageTown = villageTown, onVillageTown = { villageTown = it },
+                                    postOffice = postOffice, onPostOffice = { postOffice = it },
+                                    blockName = blockName, onBlockName = { blockName = it },
                                     areaLocality = areaLocality, onAreaLocality = { areaLocality = it },
                                     landmark = landmark, onLandmark = { landmark = it },
                                     state = state, onState = { state = it },
@@ -1011,7 +1016,8 @@ fun RegistrationAndKycWizard(
                                     city = city, onCity = { city = it },
                                     pincode = pincode, onPincode = { pincode = it },
                                     gpsLocation = gpsLocation,
-                                    onCaptureGps = ::captureGps
+                                    onCaptureGps = ::captureGps,
+                                    onOpenMaps = ::openCurrentLocationInMaps
                                 )
                             }
 
