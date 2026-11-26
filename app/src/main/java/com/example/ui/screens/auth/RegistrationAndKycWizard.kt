@@ -159,7 +159,7 @@ fun RegistrationAndKycWizard(
     var confirmPassword by remember { mutableStateOf("") }
     var dob by remember { mutableStateOf(existingKyc?.dob ?: "") }
     var gender by remember { mutableStateOf(existingKyc?.gender ?: "Male") }
-    var referralCode by remember { mutableStateOf("") }
+    var referralCode by remember { mutableStateOf(existingKyc?.referralCode ?: "") }
     var profilePhotoName by remember { mutableStateOf(existingKyc?.profilePhotoName ?: "") }
     var termsAccepted by remember { mutableStateOf(false) }
 
@@ -518,6 +518,7 @@ fun RegistrationAndKycWizard(
             role = selectedRole,
             fullName = fullName.trim(),
             mobile = mobile.trim(),
+            referralCode = referralCode.trim().uppercase(),
             email = email.trim(),
             dob = dob.trim(),
             gender = gender,
