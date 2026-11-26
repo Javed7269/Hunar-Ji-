@@ -25,6 +25,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -114,18 +119,46 @@ class MainActivity : ComponentActivity() {
             false
         }
         setContent {
-            HunarJiTheme {
-                var startupComplete by remember { mutableStateOf(false) }
-                LaunchedEffect(Unit) {
-                    delay(1100)
-                    startupComplete = true
-                }
-                if (!startupComplete) {
-                    HunarJiStartupScreen()
-                } else if (firebaseConfigured) {
-                    HunarJiRoot()
-                } else {
-                    FirebaseSetupRequiredScreen()
+            var darkTheme by remember {
+                mutableStateOf(
+                    getSharedPreferences("hunar_ji_preferences", MODE_PRIVATE)
+                        .getBoolean("dark_mode", false)
+                )
+            }
+            var startupComplete by remember { mutableStateOf(false) }
+            LaunchedEffect(Unit) {
+                delay(900)
+                startupComplete = true
+            }
+            HunarJiTheme(darkTheme = darkTheme) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    if (!startupComplete) {
+                        HunarJiStartupScreen()
+                    } else if (firebaseConfigured) {
+                        HunarJiRoot()
+                    } else {
+                        FirebaseSetupRequiredScreen()
+                    }
+                    if (startupComplete) {
+                        IconButton(
+                            onClick = {
+                                darkTheme = !darkTheme
+                                getSharedPreferences("hunar_ji_preferences", MODE_PRIVATE)
+                                    .edit()
+                                    .putBoolean("dark_mode", darkTheme)
+                                    .apply()
+                            },
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(top = 38.dp, end = 10.dp)
+                        ) {
+                            Icon(
+                                imageVector = if (darkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
+                                contentDescription = if (darkTheme) "Switch to light mode" else "Switch to dark mode",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
                 }
             }
         }
