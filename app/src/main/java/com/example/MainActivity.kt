@@ -5,6 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
+import kotlinx.coroutines.delay
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -103,7 +114,14 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             HunarJiTheme {
-                if (firebaseConfigured) {
+                var startupComplete by remember { mutableStateOf(false) }
+                LaunchedEffect(Unit) {
+                    delay(1100)
+                    startupComplete = true
+                }
+                if (!startupComplete) {
+                    HunarJiStartupScreen()
+                } else if (firebaseConfigured) {
                     HunarJiRoot()
                 } else {
                     FirebaseSetupRequiredScreen()
@@ -451,5 +469,56 @@ private fun FirebaseSetupRequiredScreen() {
                 "for application ID com.aistudio.hunarji.mrxkpq, then rebuild the APK. " +
                 "Until then, sign-in, cloud data and role dashboards cannot work."
         )
+    }
+}
+
+
+@Composable
+private fun HunarJiStartupScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(Color(0xFFE8F1FF), Color(0xFFF8FBFF), Color.White)
+                )
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_hunarji_logo_fg),
+                contentDescription = "Hunar Ji app logo",
+                modifier = Modifier
+                    .fillMaxWidth(0.62f)
+                    .height(220.dp),
+                contentScale = ContentScale.Fit
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Image(
+                painter = painterResource(id = R.drawable.img_hunarji_wordmark),
+                contentDescription = "Hunar Ji",
+                modifier = Modifier
+                    .fillMaxWidth(0.58f)
+                    .height(58.dp),
+                contentScale = ContentScale.Fit
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "SHOP  •  BOOK  •  EARN  •  GROW",
+                color = Color(0xFF31527C),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+            Spacer(modifier = Modifier.height(30.dp))
+            androidx.compose.material3.CircularProgressIndicator(
+                color = Color(0xFF1769C2),
+                strokeWidth = 3.dp,
+                modifier = Modifier.size(28.dp)
+            )
+        }
     }
 }
