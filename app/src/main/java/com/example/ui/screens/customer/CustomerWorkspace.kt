@@ -477,7 +477,7 @@ fun CustomerWorkspace(
                             loyaltyPoints = profile?.loyaltyPoints ?: 0L,
                             referralCode = profile?.referralCode?.ifBlank { "HJ2026" } ?: "HJ2026",
                             transactions = walletTx,
-                            onAddMoney = { amt, method -> viewModel.addWalletFunds(amt, method) }
+                            onAddMoney = { amt, method -> viewModel.submitWalletTopUpRequest(amt, method, "PENDING_GATEWAY_VERIFICATION") }
                         )
 
                         CustomerTab.ACCOUNT -> CustomerAccountContent(
