@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.HunarJi" parent="android:Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">@drawable/hunarji_launch_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">#E8F1FF</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
+        <item name="android:windowSplashScreenBackground">#E8F1FF</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_hunarji_logo_fg</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/img_hunarji_wordmark</item>
+        <item name="android:windowSplashScreenAnimationDuration">900</item>
+    </style>
+</resources>
