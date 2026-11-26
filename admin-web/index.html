@@ -41,7 +41,7 @@ let activeCollection="dashboard",cache={};
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 function safeValue(v){if(v&&typeof v==="object"&&typeof v.toDate==="function")return v.toDate().toLocaleString();if(v&&typeof v==="object")return JSON.stringify(v);return String(v??"");}
-function safeRecord(data){const out={...data};for(const k of Object.keys(out)){if(/secret|private.?key|api.?key|password|token|credential/i.test(k))out[k]="[HIDDEN — server-only secret]";}return out;}
+function safeRecord(data){const redact=(value)=>{if(Array.isArray(value))return value.map(redact);if(value&&typeof value==="object"&&typeof value.toDate!=="function"){const out={};for(const [key,item] of Object.entries(value)){out[key]=/secret|private.?key|api.?key|password|token|credential/i.test(key)?"[HIDDEN — server-only secret]":redact(item);}return out;}return value;};return redact(data);}
 function statusOf(d){return d.kycStatus||d.status||d.orderStatus||d.paymentStatus||d.accountStatus||"—";}
 function nameOf(d,id){return d.displayName||d.customerName||d.name||d.title||d.shopName||d.email||d.phone||id;}
 function dateOf(d){const v=d.updatedAt||d.createdAt;if(v?.toDate)return v.toDate().toLocaleString();return v?String(v):"—";}
