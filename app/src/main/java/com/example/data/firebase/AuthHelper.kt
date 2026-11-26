@@ -52,6 +52,7 @@ fun attemptAutoSignIn(
         onUnauthenticated()
         return
     }
+    if (clientId.isBlank()) { onUnauthenticated(); return }
     val googleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(true)
         .setServerClientId(clientId)
@@ -90,6 +91,7 @@ fun onGoogleSignInClicked(
         onAuthError("Google Sign-In configuration missing: default_web_client_id not found")
         return
     }
+    if (clientId.isBlank()) { onAuthError("Google Sign-In is not configured. Add the Firebase Web Client ID."); return }
     val signInOption = GetSignInWithGoogleOption.Builder(serverClientId = clientId).build()
     val request = GetCredentialRequest.Builder()
         .addCredentialOption(signInOption)
