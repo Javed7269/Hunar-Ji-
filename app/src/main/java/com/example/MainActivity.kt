@@ -53,7 +53,6 @@ import com.example.ui.theme.HunarJiTheme
 import com.example.ui.viewmodel.AdminClaimState
 import com.example.ui.viewmodel.HunarJiViewModel
 import com.example.ui.viewmodel.UiState
-import com.google.android.gms.ads.MobileAds
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseUser
@@ -80,14 +79,28 @@ private data class PendingRegistrationPayload(
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Keep cold start independent from optional SDKs. Ads are initialized by
+        // their feature when needed, not while the launcher activity is starting.
         try {
-            MobileAds.initialize(this) {}
+            enableEdgeToEdge()
         } catch (_: Exception) {
+            // Continue with the platform window defaults on older/modified devices.
         }
-        enableEdgeToEdge()
-        // Firebase is optional at process startup so a missing google-services.json
-        // cannot crash the app before the user sees a helpful setup message.
-        val firebaseConfigured = FirebaseApp.getApps(this).isNotEmpty()
+
+        // Initialize the default Firebase app explicitly and fail closed to the
+        // setup screen instead of allowing an initialization exception to crash startup.
+        val firebaseConfigured = try {
+            FirebaseApp.getInstance()
+            true
+        } catch (_: IllegalStateException) {
+            try {
+                FirebaseApp.initializeApp(this) != null
+            } catch (_: Exception) {
+                false
+            }
+        } catch (_: Exception) {
+            false
+        }
         setContent {
             HunarJiTheme {
                 if (firebaseConfigured) {
