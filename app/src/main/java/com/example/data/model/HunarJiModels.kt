@@ -529,6 +529,8 @@ data class KycApplication(
     val houseNumber: String = "",
     val streetRoad: String = "",
     val villageTown: String = "",
+    val postOffice: String = "",
+    val blockName: String = "",
     val areaLocality: String = "",
     val landmark: String = "",
     val state: String = "Bihar",
