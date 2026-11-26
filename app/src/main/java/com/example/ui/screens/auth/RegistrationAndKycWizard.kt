@@ -161,6 +161,8 @@ fun RegistrationAndKycWizard(
     var houseNo by remember { mutableStateOf(existingKyc?.houseNumber ?: "") }
     var streetRoad by remember { mutableStateOf(existingKyc?.streetRoad ?: "") }
     var villageTown by remember { mutableStateOf(existingKyc?.villageTown ?: "") }
+    var postOffice by remember { mutableStateOf(existingKyc?.postOffice ?: "") }
+    var blockName by remember { mutableStateOf(existingKyc?.blockName ?: "") }
     var areaLocality by remember { mutableStateOf(existingKyc?.areaLocality ?: "") }
     var landmark by remember { mutableStateOf(existingKyc?.landmark ?: "") }
     var state by remember { mutableStateOf(existingKyc?.state?.ifBlank { "Bihar" } ?: "Bihar") }
@@ -459,7 +461,7 @@ fun RegistrationAndKycWizard(
         errorMsg = null
         isSubmitting = true
 
-        val composedFullAddr = listOf(houseNo, streetRoad, villageTown, areaLocality, landmark, city, district, state, pincode)
+        val composedFullAddr = listOf(houseNo, streetRoad, villageTown, postOffice, blockName, areaLocality, landmark, city, district, state, pincode)
             .filter { it.isNotBlank() }.joinToString(", ")
 
         val app = KycApplication(
@@ -475,6 +477,8 @@ fun RegistrationAndKycWizard(
             houseNumber = houseNo.trim(),
             streetRoad = streetRoad.trim(),
             villageTown = villageTown.trim(),
+            postOffice = postOffice.trim(),
+            blockName = blockName.trim(),
             areaLocality = areaLocality.trim(),
             landmark = landmark.trim(),
             state = state.trim(),
@@ -833,6 +837,8 @@ fun RegistrationAndKycWizard(
                                     houseNo = houseNo, onHouseNo = { houseNo = it },
                                     streetRoad = streetRoad, onStreetRoad = { streetRoad = it },
                                     villageTown = villageTown, onVillageTown = { villageTown = it },
+                                    postOffice = postOffice, onPostOffice = { postOffice = it },
+                                    blockName = blockName, onBlockName = { blockName = it },
                                     areaLocality = areaLocality, onAreaLocality = { areaLocality = it },
                                     landmark = landmark, onLandmark = { landmark = it },
                                     state = state, onState = { state = it },
