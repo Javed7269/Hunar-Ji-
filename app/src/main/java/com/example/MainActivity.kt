@@ -164,10 +164,28 @@ private fun HunarJiRoot() {
         AuthScreen(
             onAuthSuccess = {},
             onPreparePasswordLogin = { id, pwd ->
-                pendingLogin = PendingCredentialLogin(id, pwd)
-                pendingReset = null
-                pendingRegistration = null
-                pendingAdminLogin = false
+                val mobileDigits = id.filter(Char::isDigit).takeLast(10)
+                if (mobileDigits.length != 10) {
+                    authScreenError = "Enter your registered 10-digit mobile number."
+                } else {
+                    authScreenError = null
+                    Firebase.auth.signInWithEmailAndPassword("$mobileDigits@mobile.hunarji.in", pwd)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                pendingLogin = PendingCredentialLogin(mobileDigits, pwd)
+                                pendingReset = null
+                                pendingRegistration = null
+                                pendingAdminLogin = false
+                            } else {
+                                authScreenError = when (task.exception) {
+                                    is com.google.firebase.auth.FirebaseAuthInvalidUserException,
+                                    is com.google.firebase.auth.FirebaseAuthInvalidCredentialsException ->
+                                        "Mobile number or password is incorrect. Please register or check your details."
+                                    else -> task.exception?.localizedMessage ?: "Login failed. Please try again."
+                                }
+                            }
+                        }
+                }
             },
             onPrepareOtpLogin = { _ ->
                 pendingLogin = null
