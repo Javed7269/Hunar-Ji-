@@ -53,6 +53,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.data.firebase.HunarJiRepository
 import com.example.data.firebase.authStateFlow
+import com.example.data.firebase.onGoogleSignInClicked
 import com.example.data.firebase.signOutUser
 import com.example.data.model.AppWorkspace
 import com.example.data.model.KycApplication
@@ -425,7 +426,19 @@ private fun HunarJiAuthenticatedShell(
                         signedInEmail = user.email.orEmpty().ifBlank { viewModel.currentUserEmail },
                         claimState = adminClaimState,
                         isLoading = adminClaimState is AdminClaimState.Checking,
-                        onSignInWithGoogleForAdmin = {},
+                                                onSignInWithGoogleForAdmin = {
+                            onGoogleSignInClicked(
+                                context = context,
+                                credentialManager = CredentialManager.create(context),
+                                onAuthSuccess = {
+                                    viewModel.verifyAdminClaimAndRedirect(forceRefresh = true)
+                                },
+                                onAuthError = { message ->
+                                    scope.launch { snackbarHostState.showSnackbar(message) }
+                                },
+                                scope = scope
+                            )
+                        },
                         onRetryClaimVerification = {
                             viewModel.verifyAdminClaimAndRedirect(forceRefresh = true)
                         },
