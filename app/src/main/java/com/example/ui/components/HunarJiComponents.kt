@@ -395,8 +395,8 @@ fun StatusPill(status: String) {
 fun AuthScreen(
     onAuthSuccess: () -> Unit = {},
     onPreparePasswordLogin: (identifier: String, password: String) -> Unit = { _, _ -> },
-    onPrepareOtpLogin: (mobile: String) -> Unit = {},
-    onPreparePasswordReset: (identifier: String, newPassword: String) -> Unit = { _, _ -> },
+    
+    
     onPrepareRegistration: (KycApplication, String, List<KycDocumentRecord>, Boolean) -> Unit = { _, _, _, _ -> },
     onPrepareAdminLogin: () -> Unit = {},
     externalError: String? = null,
@@ -408,22 +408,18 @@ fun AuthScreen(
 
     var showRegistrationWizard by remember { mutableStateOf(false) }
     var showAdminLoginScreen by remember { mutableStateOf(false) }
-    var useUserIdMode by remember { mutableStateOf(false) }
     var identifier by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
     var rememberMe by remember { mutableStateOf(true) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember(externalError) { mutableStateOf(externalError) }
-    var showOtpLoginDialog by remember { mutableStateOf(false) }
-    var showForgotDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         RegistrationDraftStore.observeRememberedLogin(context).collect { (rem, savedId) ->
             rememberMe = rem
             if (rem && savedId.isNotBlank() && identifier.isBlank()) {
                 identifier = savedId
-                useUserIdMode = savedId.startsWith("HJ-", ignoreCase = true)
             }
         }
     }
@@ -600,46 +596,15 @@ fun AuthScreen(
                     )
                     Spacer(Modifier.height(14.dp))
 
-                    // Identifier mode pills: Mobile Number vs User ID
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        val modes = listOf(false to "Mobile Number", true to "User ID (HJ-...)")
-                        modes.forEach { (isUid, label) ->
-                            val selected = useUserIdMode == isUid
-                            Surface(
-                                color = if (selected) BrandBlueLight else Color(0xFFF8FAFC),
-                                shape = RoundedCornerShape(50),
-                                border = BorderStroke(1.dp, if (selected) BrandBlue else Color(0xFFE2E8F0)),
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clip(RoundedCornerShape(50))
-                                    .clickable { useUserIdMode = isUid }
-                                    .testTag(if (isUid) "login_mode_userid" else "login_mode_mobile")
-                            ) {
-                                Text(
-                                    text = label,
-                                    style = MaterialTheme.typography.labelSmall.copy(
-                                        color = if (selected) BrandBlueDark else TextSecondary,
-                                        fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium
-                                    ),
-                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp),
-                                    maxLines = 1
-                                )
-                            }
-                        }
-                    }
-
                     Spacer(Modifier.height(12.dp))
 
                     OutlinedTextField(
                         value = identifier,
                         onValueChange = { identifier = it },
-                        label = { Text(if (useUserIdMode) "User ID (e.g. HJ-MEC-100001)" else "Mobile Number") },
+                        label = { Text("Registered Mobile Number") },
                         leadingIcon = {
                             Icon(
-                                if (useUserIdMode) Icons.Default.Badge else Icons.Default.PhoneAndroid,
+                                Icons.Default.PhoneAndroid,
                                 contentDescription = null,
                                 tint = BrandBlue
                             )
@@ -653,7 +618,7 @@ fun AuthScreen(
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
-                            keyboardType = if (useUserIdMode) KeyboardType.Text else KeyboardType.Phone
+                            keyboardType = KeyboardType.Phone
                         ),
                         shape = RoundedCornerShape(14.dp),
                         modifier = Modifier
@@ -688,26 +653,14 @@ fun AuthScreen(
                     Spacer(Modifier.height(6.dp))
 
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.clickable { rememberMe = !rememberMe }
-                        ) {
-                            Checkbox(
-                                checked = rememberMe,
-                                onCheckedChange = { rememberMe = it }
-                            )
-                            Text("Remember Me", style = MaterialTheme.typography.bodySmall, color = TextPrimary)
-                        }
-                        TextButton(
-                            onClick = { showForgotDialog = true },
-                            modifier = Modifier.testTag("forgot_password_button")
-                        ) {
-                            Text("Forgot Password?", style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold), color = BrandBlue)
-                        }
+                        Checkbox(
+                            checked = rememberMe,
+                            onCheckedChange = { rememberMe = it }
+                        )
+                        Text("Remember Me", style = MaterialTheme.typography.bodySmall, color = TextPrimary)
                     }
 
                     if (errorMessage != null) {
@@ -731,20 +684,22 @@ fun AuthScreen(
                     Button(
                         onClick = {
                             val cleanId = identifier.trim()
-                            if (cleanId.isBlank()) {
-                                errorMessage = if (useUserIdMode) "Enter your Hunar Ji User ID" else "Enter your registered mobile number"
+                            val mobileDigits = cleanId.filter(Char::isDigit).takeLast(10)
+                            if (mobileDigits.length != 10) {
+                                errorMessage = "Enter your registered 10-digit mobile number"
                                 return@Button
                             }
                             if (password.length < 6) {
                                 errorMessage = "Enter your password (minimum 6 characters)"
                                 return@Button
                             }
+                            isLoading = true
+                            errorMessage = null
                             scope.launch {
-                                RegistrationDraftStore.saveRememberedLogin(context, rememberMe, cleanId)
+                                RegistrationDraftStore.saveRememberedLogin(context, rememberMe, mobileDigits)
                             }
-                            launchGoogleSignIn {
-                                onPreparePasswordLogin(cleanId, password)
-                            }
+                            onPreparePasswordLogin(mobileDigits, password)
+                            isLoading = false
                         },
                         enabled = !isLoading,
                         modifier = Modifier
@@ -767,48 +722,6 @@ fun AuthScreen(
                     }
 
                     Spacer(Modifier.height(14.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                        HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE2E8F0))
-                        Text("  or continue with  ", style = MaterialTheme.typography.labelSmall, color = TextMuted)
-                        HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE2E8F0))
-                    }
-                    Spacer(Modifier.height(12.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        OutlinedButton(
-                            onClick = {
-                                launchGoogleSignIn {}
-                            },
-                            enabled = !isLoading,
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.dp, Color(0xFFE2E8F0)),
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(46.dp)
-                                .testTag("google_sign_in_button")
-                        ) {
-                            Icon(Icons.Default.AccountCircle, contentDescription = null, tint = BrandBlue, modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(6.dp))
-                            Text("Google", style = MaterialTheme.typography.labelLarge, color = TextPrimary)
-                        }
-                        OutlinedButton(
-                            onClick = { showOtpLoginDialog = true },
-                            enabled = !isLoading,
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.dp, Color(0xFFE2E8F0)),
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(46.dp)
-                                .testTag("otp_login_button")
-                        ) {
-                            Icon(Icons.Default.Sms, contentDescription = null, tint = BrandBlue, modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(6.dp))
-                            Text("OTP Login", style = MaterialTheme.typography.labelLarge, color = TextPrimary)
-                        }
-                    }
 
                     Spacer(Modifier.height(14.dp))
                     Row(
@@ -896,31 +809,6 @@ fun AuthScreen(
         }
     }
 
-    if (showOtpLoginDialog) {
-        OtpLoginModal(
-            initialMobile = if (!useUserIdMode) identifier else "",
-            onVerified = { mobile ->
-                showOtpLoginDialog = false
-                launchGoogleSignIn {
-                    onPrepareOtpLogin(mobile)
-                }
-            },
-            onDismiss = { showOtpLoginDialog = false }
-        )
-    }
-
-    if (showForgotDialog) {
-        ForgotPasswordOtpModal(
-            initialIdentifier = identifier,
-            onResetReady = { id, newPass ->
-                showForgotDialog = false
-                launchGoogleSignIn {
-                    onPreparePasswordReset(id, newPass)
-                }
-            },
-            onDismiss = { showForgotDialog = false }
-        )
-    }
 }
 
 @Composable
