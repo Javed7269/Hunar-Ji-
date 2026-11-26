@@ -79,12 +79,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.credentials.CredentialManager
 import com.example.R
 import com.example.core.security.CredentialSecurityHelper
 import com.example.core.storage.PrivateKycStorage
 import com.example.core.storage.RegistrationDraftStore
-import com.example.data.firebase.onGoogleSignInClicked
 import com.example.data.model.KycApplication
 import com.example.data.model.KycCatalogConstants
 import com.example.data.model.KycDocumentRecord
@@ -132,7 +130,6 @@ fun RegistrationAndKycWizard(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val credentialManager = remember { CredentialManager.create(context) }
 
     BackHandler { onCancel() }
 
@@ -568,23 +565,29 @@ fun RegistrationAndKycWizard(
         }
 
         if (Firebase.auth.currentUser == null) {
-            onGoogleSignInClicked(
-                context = context,
-                credentialManager = credentialManager,
-                onAuthSuccess = {
-                    onAuthenticatedBeforeSubmit?.invoke()
-                    executeUpload()
-                },
-                onAuthError = { msg ->
-                    isSubmitting = false
-                    errorMsg = msg
-                },
-                scope = scope,
-                onAuthCancelled = {
-                    isSubmitting = false
-                    errorMsg = "Google verification cancelled. Complete Google sign-in to save your Hunar Ji account."
-                }
-            )
+            val mobileDigits = mobile.filter(Char::isDigit).takeLast(10)
+            if (mobileDigits.length != 10) {
+                isSubmitting = false
+                errorMsg = "Enter a valid 10-digit mobile number to create your account."
+            } else if (password.length < 6) {
+                isSubmitting = false
+                errorMsg = "Password must contain at least 6 characters."
+            } else {
+                Firebase.auth.createUserWithEmailAndPassword("$mobileDigits@mobile.hunarji.in", password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            onAuthenticatedBeforeSubmit?.invoke()
+                            executeUpload()
+                        } else {
+                            isSubmitting = false
+                            errorMsg = when (task.exception) {
+                                is com.google.firebase.auth.FirebaseAuthUserCollisionException ->
+                                    "This mobile number is already registered. Please login instead."
+                                else -> task.exception?.localizedMessage ?: "Account creation failed. Please try again."
+                            }
+                        }
+                    }
+            }
         } else {
             executeUpload()
         }
