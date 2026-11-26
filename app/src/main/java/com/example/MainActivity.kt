@@ -187,18 +187,6 @@ private fun HunarJiRoot() {
                         }
                 }
             },
-            onPrepareOtpLogin = { _ ->
-                pendingLogin = null
-                pendingReset = null
-                pendingRegistration = null
-                pendingAdminLogin = false
-            },
-            onPreparePasswordReset = { id, newPwd ->
-                pendingReset = PendingPasswordReset(id, newPwd)
-                pendingLogin = null
-                pendingRegistration = null
-                pendingAdminLogin = false
-            },
             onPrepareRegistration = { app, rawPwd, docs, terms ->
                 pendingRegistration = PendingRegistrationPayload(app, rawPwd, docs, terms)
                 pendingLogin = null
