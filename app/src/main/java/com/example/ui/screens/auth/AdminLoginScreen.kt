@@ -197,7 +197,7 @@ fun AdminLoginScreen(
                         )
 
                         Text(
-                            text = "This portal inspects the Firebase Authentication ID token and requires the custom claim 'is_admin' == true before granting access to the Admin Dashboard.",
+                            text = "This portal verifies the Firebase Authentication ID token and grants Admin access only to an account with the server-issued 'is_admin' claim or the verified bootstrap Admin account.",
                             style = MaterialTheme.typography.bodySmall,
                             color = TextSecondary,
                             textAlign = TextAlign.Center
@@ -219,7 +219,7 @@ fun AdminLoginScreen(
                                     done = isSignedIn
                                 )
                                 ClaimCheckStepRow(
-                                    label = "2. Refresh ID Token & Check 'is_admin' Custom Claim",
+                                    label = "2. Refresh ID Token & Verify Approved Admin Access",
                                     done = claimState is AdminClaimState.Verified,
                                     failed = isDenied
                                 )
