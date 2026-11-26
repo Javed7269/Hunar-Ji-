@@ -1,5 +1,6 @@
 package com.example.ui.screens.customer
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -52,6 +53,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.data.model.UserProfile
@@ -90,6 +92,7 @@ fun CustomerAccountScreen(
     onSaveProfile: (String, String, String) -> Unit,
     onSignOut: () -> Unit
 ) {
+    val context = LocalContext.current
     var editing by remember { mutableStateOf(false) }
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var nameInput by remember(profile) { mutableStateOf(profile?.displayName?.ifBlank { fallbackName } ?: fallbackName) }
@@ -130,6 +133,23 @@ fun CustomerAccountScreen(
                                 style = MaterialTheme.typography.labelSmall,
                                 color = BrandBlue
                             )
+                            val referralCode = profile?.referralCode.orEmpty().trim()
+                            if (referralCode.isNotBlank()) {
+                                Spacer(Modifier.height(6.dp))
+                                OutlinedButton(
+                                    onClick = {
+                                        val inviteText = "Join me on Hunar Ji! Use my referral code: $referralCode\\nDownload the app: https://github.com/Javed7269/Hunar-Ji-/releases/latest/download/hunar-ji-debug.apk"
+                                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                            type = "text/plain"
+                                            putExtra(Intent.EXTRA_TEXT, inviteText)
+                                        }
+                                        context.startActivity(Intent.createChooser(shareIntent, "Share Hunar Ji invite"))
+                                    },
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text("Share Referral & App Download Link")
+                                }
+                            }
                         }
                         TextButton(onClick = { editing = !editing }) {
                             Text(if (editing) "Cancel" else "Edit")
