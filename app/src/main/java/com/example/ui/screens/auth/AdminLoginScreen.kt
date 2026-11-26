@@ -310,6 +310,20 @@ fun AdminLoginScreen(
                             }
 
                             OutlinedButton(
+                                onClick = onSignInWithGoogleForAdmin,
+                                enabled = !isChecking,
+                                shape = RoundedCornerShape(14.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(48.dp)
+                                    .testTag("admin_google_account_button")
+                            ) {
+                                Icon(Icons.Default.SwitchAccount, contentDescription = null, tint = BrandBlueDark)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Sign In With Admin Google Account", color = BrandBlueDark)
+                            }
+
+                            OutlinedButton(
                                 onClick = onSwitchAdminAccount,
                                 enabled = !isChecking,
                                 shape = RoundedCornerShape(14.dp),
