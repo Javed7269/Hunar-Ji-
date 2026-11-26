@@ -46,7 +46,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.data.firebase.HunarJiRepository
-import com.example.data.firebase.attemptAutoSignIn
 import com.example.data.firebase.authStateFlow
 import com.example.data.firebase.signOutUser
 import com.example.data.model.AppWorkspace
@@ -146,18 +145,6 @@ private fun HunarJiRoot() {
     var pendingRegistration by remember { mutableStateOf<PendingRegistrationPayload?>(null) }
     var pendingAdminLogin by remember { mutableStateOf(false) }
     var authScreenError by remember { mutableStateOf<String?>(null) }
-
-    LaunchedEffect(Unit) {
-        if (Firebase.auth.currentUser == null) {
-            attemptAutoSignIn(
-                context = context,
-                credentialManager = credentialManager,
-                onAuthSuccess = {},
-                onUnauthenticated = {},
-                scope = scope
-            )
-        }
-    }
 
     val user = currentUser
     if (user == null) {
