@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -53,6 +55,7 @@ import com.example.ui.viewmodel.HunarJiViewModel
 import com.example.ui.viewmodel.UiState
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -82,9 +85,16 @@ class MainActivity : ComponentActivity() {
         } catch (_: Exception) {
         }
         enableEdgeToEdge()
+        // Firebase is optional at process startup so a missing google-services.json
+        // cannot crash the app before the user sees a helpful setup message.
+        val firebaseConfigured = FirebaseApp.getApps(this).isNotEmpty()
         setContent {
             HunarJiTheme {
-                HunarJiRoot()
+                if (firebaseConfigured) {
+                    HunarJiRoot()
+                } else {
+                    FirebaseSetupRequiredScreen()
+                }
             }
         }
     }
@@ -408,6 +418,25 @@ private fun HunarJiAuthenticatedShell(
             current = language,
             onSelect = { viewModel.setLanguage(it) },
             onDismiss = { showLanguagePicker = false }
+        )
+    }
+}
+
+
+@Composable
+private fun FirebaseSetupRequiredScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Hunar Ji setup required")
+        Text(
+            "Firebase is not configured in this APK. Add the Firebase Android google-services.json " +
+                "for application ID com.aistudio.hunarji.mrxkpq, then rebuild the APK. " +
+                "Until then, sign-in, cloud data and role dashboards cannot work."
         )
     }
 }
