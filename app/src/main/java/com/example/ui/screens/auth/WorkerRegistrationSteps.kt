@@ -164,6 +164,8 @@ fun RegAddressSection(
     houseNo: String, onHouseNo: (String) -> Unit,
     streetRoad: String, onStreetRoad: (String) -> Unit,
     villageTown: String, onVillageTown: (String) -> Unit,
+    postOffice: String, onPostOffice: (String) -> Unit,
+    blockName: String, onBlockName: (String) -> Unit,
     areaLocality: String, onAreaLocality: (String) -> Unit,
     landmark: String, onLandmark: (String) -> Unit,
     state: String, onState: (String) -> Unit,
@@ -184,6 +186,8 @@ fun RegAddressSection(
             OutlinedTextField(value = villageTown, onValueChange = onVillageTown, label = { Text("Village / Town") }, singleLine = true, modifier = Modifier.weight(1f))
             OutlinedTextField(value = areaLocality, onValueChange = onAreaLocality, label = { Text("Area / Locality *") }, singleLine = true, modifier = Modifier.weight(1f))
         }
+        OutlinedTextField(value = postOffice, onValueChange = onPostOffice, label = { Text("Post Office") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(value = blockName, onValueChange = onBlockName, label = { Text("Block / Tehsil") }, singleLine = true, modifier = Modifier.fillMaxWidth())
         OutlinedTextField(value = landmark, onValueChange = onLandmark, label = { Text("Landmark") }, singleLine = true, modifier = Modifier.fillMaxWidth())
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedTextField(value = city, onValueChange = onCity, label = { Text("City *") }, singleLine = true, modifier = Modifier.weight(1f))
