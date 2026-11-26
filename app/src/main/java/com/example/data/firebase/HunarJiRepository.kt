@@ -2043,6 +2043,8 @@ class HunarJiRepository(
                 "houseNumber" to application.houseNumber.trim().take(80),
                 "streetRoad" to application.streetRoad.trim().take(120),
                 "villageTown" to application.villageTown.trim().take(120),
+                "postOffice" to application.postOffice.trim().take(120),
+                "blockName" to application.blockName.trim().take(120),
                 "areaLocality" to application.areaLocality.trim().take(120),
                 "landmark" to application.landmark.trim().take(120),
                 "state" to application.state.trim().take(80),
