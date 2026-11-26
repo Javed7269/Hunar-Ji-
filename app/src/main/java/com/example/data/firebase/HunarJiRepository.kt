@@ -1917,7 +1917,7 @@ class HunarJiRepository(
         docRecords: List<KycDocumentRecord>,
         termsAccepted: Boolean
     ): Result<KycApplication> {
-        val uid = auth.currentUser?.uid ?: return Result.failure(IllegalStateException("Sign in required before submitting registration"))
+        val uid = auth.currentUser?.uid ?: return Result.failure(IllegalStateException("Create your account with mobile number and password first"))
         val email = application.email.trim().take(160)
         val role = application.role.uppercase().let {
             if (it in listOf("CUSTOMER", "MECHANIC", "SELLER", "DELIVERY")) it else "CUSTOMER"
@@ -2282,7 +2282,7 @@ class HunarJiRepository(
     }
 
     suspend fun verifyLocalCredentials(identifier: String, password: String): Result<UserProfile> {
-        val uid = auth.currentUser?.uid ?: return Result.failure(IllegalStateException("Sign in with Google first"))
+        val uid = auth.currentUser?.uid ?: return Result.failure(IllegalStateException("Sign in first"))
         return runSafeValue(OperationType.GET, "users/$uid") {
             val snap = db.collection("users").document(uid).get().await()
             val profile = snap.toObject(UserProfile::class.java, est())
