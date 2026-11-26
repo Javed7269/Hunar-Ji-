@@ -61,19 +61,19 @@ val HunarJiTypography = Typography(
     ),
     bodyLarge = TextStyle(
         fontFamily = PlusJakartaFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 15.sp,
         lineHeight = 22.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = PlusJakartaFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 13.sp,
         lineHeight = 18.sp
     ),
     bodySmall = TextStyle(
         fontFamily = PlusJakartaFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 11.sp,
         lineHeight = 16.sp
     ),
