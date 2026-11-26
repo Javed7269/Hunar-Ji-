@@ -275,6 +275,7 @@ private fun HunarJiAuthenticatedShell(
     onSignOut: () -> Unit
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val viewModel: HunarJiViewModel = viewModel(
         key = user.uid,
         factory = viewModelFactory {
