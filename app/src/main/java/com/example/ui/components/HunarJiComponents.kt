@@ -419,7 +419,7 @@ fun AuthScreen(
         RegistrationDraftStore.observeRememberedLogin(context).collect { (rem, savedId) ->
             rememberMe = rem
             if (rem && savedId.isNotBlank() && identifier.isBlank()) {
-                identifier = savedId
+                identifier = if (savedId.startsWith("HJ-", ignoreCase = true)) "" else savedId
             }
         }
     }
