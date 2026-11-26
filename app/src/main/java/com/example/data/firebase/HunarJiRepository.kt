@@ -1928,6 +1928,21 @@ class HunarJiRepository(
             val kycRef = db.collection("kyc_applications").document(uid)
             val kycSnap = kycRef.get().await()
 
+            val enteredReferralCode = application.referralCode.trim().uppercase()
+            val referredByUid = if (enteredReferralCode.isNotBlank()) {
+                val referralMatches = db.collection("users")
+                    .whereEqualTo("referralCode", enteredReferralCode)
+                    .limit(1)
+                    .get()
+                    .await()
+                val referrer = referralMatches.documents.firstOrNull()
+                    ?: throw IllegalArgumentException("Referral code was not found. Check the code and try again.")
+                if (referrer.id == uid) {
+                    throw IllegalArgumentException("You cannot use your own referral code.")
+                }
+                referrer.id
+            } else ""
+
             val existingRole = userSnap.getString("role") ?: ""
             val existingHunarId = userSnap.getString("hunarUserId") ?: ""
             val hunarUserId = if (existingHunarId.isNotBlank() && existingRole.equals(role, true)) {
@@ -1963,6 +1978,8 @@ class HunarJiRepository(
                         "displayName" to cleanName,
                         "email" to email,
                         "phone" to application.mobile.trim().take(24),
+                        "referredByCode" to (userSnap.getString("referredByCode") ?: enteredReferralCode),
+                        "referredByUid" to (userSnap.getString("referredByUid") ?: referredByUid),
                         "role" to role,
                         "walletBalance" to 0.0,
                         "loyaltyPoints" to 50L,
@@ -1973,6 +1990,8 @@ class HunarJiRepository(
                         "district" to application.district.trim().ifBlank { "Patna" }.take(80),
                         "state" to application.state.trim().ifBlank { "Bihar" }.take(80),
                         "referralCode" to refCode,
+                        "referredByCode" to enteredReferralCode,
+                        "referredByUid" to referredByUid,
                         "shopName" to application.shopName.trim().take(120),
                         "vehicleInfo" to summaryVehicle,
                         "skills" to summarySkills,
@@ -2034,6 +2053,7 @@ class HunarJiRepository(
                 "role" to role,
                 "fullName" to application.fullName.trim().ifBlank { "User" }.take(80),
                 "mobile" to application.mobile.trim().take(20),
+                "referralCode" to enteredReferralCode,
                 "email" to email,
                 "dob" to application.dob.trim().take(32),
                 "gender" to application.gender.trim().take(32),
