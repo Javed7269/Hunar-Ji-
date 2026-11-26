@@ -251,7 +251,7 @@ private fun HunarJiAuthenticatedShell(
                 HunarJiViewModel(
                     repository = repo,
                     currentUserId = user.uid,
-                    currentUserEmail = user.email ?: "",
+                    currentUserEmail = user.email?.takeUnless { it.endsWith("@mobile.hunarji.in", ignoreCase = true) } ?: "",
                     currentUserName = user.displayName ?: (user.email?.substringBefore("@") ?: "Hunar Ji User")
                 )
             }
