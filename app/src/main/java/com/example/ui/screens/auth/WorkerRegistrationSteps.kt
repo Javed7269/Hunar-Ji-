@@ -173,7 +173,8 @@ fun RegAddressSection(
     city: String, onCity: (String) -> Unit,
     pincode: String, onPincode: (String) -> Unit,
     gpsLocation: String,
-    onCaptureGps: () -> Unit
+    onCaptureGps: () -> Unit,
+    onOpenMaps: () -> Unit
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(title, style = MaterialTheme.typography.titleMedium, color = BrandBlueDark)
@@ -198,6 +199,9 @@ fun RegAddressSection(
             Icon(Icons.Default.LocationOn, contentDescription = null, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(6.dp))
             Text(if (gpsLocation.isBlank()) "Capture Current GPS Location" else "GPS: $gpsLocation")
+        }
+        OutlinedButton(onClick = onOpenMaps, shape = RoundedCornerShape(10.dp), modifier = Modifier.fillMaxWidth()) {
+            Text("Open Current Location in Google Maps")
         }
     }
 }
