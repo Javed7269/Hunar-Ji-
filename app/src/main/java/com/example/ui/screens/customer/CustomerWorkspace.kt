@@ -322,7 +322,7 @@ fun CustomerWorkspace(
             },
             bottomBar = {
                 NavigationBar(
-                    containerColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.surface,
                     tonalElevation = 6.dp,
                     modifier = Modifier.navigationBarsPadding()
                 ) {
@@ -1075,7 +1075,7 @@ private fun CustomerHomeContent(
                     .fillMaxWidth()
                     .padding(horizontal = 14.dp),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 border = BorderStroke(1.dp, Color(0xFFE2E8F0))
             ) {
                 Row(
@@ -1159,7 +1159,7 @@ fun SpecialOfferProductCard(
             .clickable(onClick = onClick)
             .testTag("product_card_${product.id}"),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         border = BorderStroke(1.dp, Color(0xFFE2E8F0)),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
@@ -1430,7 +1430,7 @@ private fun CustomerBrowseContent(
                             .fillMaxWidth()
                             .clickable { onProductClick(prod) },
                         shape = RoundedCornerShape(16.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                         border = BorderStroke(1.dp, Color(0xFFE2E8F0))
                     ) {
                         Row(
@@ -1492,7 +1492,7 @@ private fun CustomerBrowseContent(
                         Card(
                             modifier = Modifier.width(220.dp),
                             shape = RoundedCornerShape(14.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                             border = BorderStroke(1.dp, Color(0xFFE2E8F0))
                         ) {
                             Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -1517,7 +1517,7 @@ private fun CustomerBrowseContent(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     border = BorderStroke(1.dp, Color(0xFFE2E8F0))
                 ) {
                     Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -1595,7 +1595,7 @@ private fun CustomerDealsContent(
                     .fillMaxWidth()
                     .clickable { onProductClick(prod) },
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 border = BorderStroke(1.dp, Color(0xFFE2E8F0))
             ) {
                 Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -1667,7 +1667,7 @@ private fun CustomerWalletContent(
         item {
             Card(
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 border = BorderStroke(1.dp, Color(0xFFE2E8F0))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -1722,7 +1722,7 @@ private fun CustomerWalletContent(
             items(transactions.sortedByDescending { it.createdAt?.seconds ?: 0L }, key = { it.id }) { tx ->
                 Card(
                     shape = RoundedCornerShape(14.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     border = BorderStroke(1.dp, Color(0xFFE2E8F0))
                 ) {
                     Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -1783,7 +1783,7 @@ private fun CustomerAccountContent(
         item {
             Card(
                 shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 border = BorderStroke(1.dp, Color(0xFFE2E8F0))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -1849,7 +1849,7 @@ private fun CustomerAccountContent(
                     .fillMaxWidth()
                     .clickable(onClick = action),
                 shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 border = BorderStroke(1.dp, Color(0xFFE2E8F0))
             ) {
                 Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
