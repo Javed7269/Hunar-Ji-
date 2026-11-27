@@ -1,6 +1,8 @@
 package com.example
 
 import android.os.Bundle
+import android.content.Intent
+import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -400,17 +402,20 @@ private fun HunarJiAuthenticatedShell(
                         claimState = adminClaimState,
                         isLoading = adminClaimState is AdminClaimState.Checking,
                                                 onSignInWithGoogleForAdmin = {
-                            onGoogleSignInClicked(
-                                context = context,
-                                credentialManager = CredentialManager.create(context),
-                                onAuthSuccess = {
-                                    viewModel.verifyAdminClaimAndRedirect(forceRefresh = true)
-                                },
-                                onAuthError = { message ->
-                                    scope.launch { snackbarHostState.showSnackbar(message) }
-                                },
-                                scope = scope
-                            )
+                            try {
+                                context.startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse("https://hunarji.netlify.app/admin/")
+                                    )
+                                )
+                            } catch (error: Exception) {
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        "Open the Hunar Ji Admin website in your browser to sign in with email and OTP."
+                                    )
+                                }
+                            }
                         },
                         onRetryClaimVerification = {
                             viewModel.verifyAdminClaimAndRedirect(forceRefresh = true)
