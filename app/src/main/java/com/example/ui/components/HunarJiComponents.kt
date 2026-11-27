@@ -155,7 +155,7 @@ fun HunarJiBrandWordmark(
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_hunarji_logo_fg),
-            contentDescription = "Hunar Ji logo",
+            contentDescription = "HUNHAR JI logo",
             modifier = Modifier.size(36.dp),
             contentScale = ContentScale.Fit
         )
@@ -163,7 +163,7 @@ fun HunarJiBrandWordmark(
         Column {
             Image(
                 painter = painterResource(id = R.drawable.img_hunarji_wordmark),
-                contentDescription = "Hunar Ji",
+                contentDescription = "HUNHAR JI",
                 modifier = Modifier
                     .height(28.dp)
                     .width(92.dp),
@@ -195,14 +195,14 @@ fun HunarJiCenteredLogoHeader(
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_hunarji_logo_fg),
-            contentDescription = "Hunar Ji logo",
+            contentDescription = "HUNHAR JI logo",
             modifier = Modifier.size(logoSize),
             contentScale = ContentScale.Fit
         )
         Spacer(Modifier.height(2.dp))
         Image(
             painter = painterResource(id = R.drawable.img_hunarji_wordmark),
-            contentDescription = "Hunar Ji",
+            contentDescription = "HUNHAR JI",
             modifier = Modifier
                 .height(48.dp)
                 .width(168.dp),
@@ -534,7 +534,7 @@ fun AuthScreen(
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.img_delivery_hero),
-                    contentDescription = "Hunar Ji Multi-Role Marketplace",
+                    contentDescription = "HUNHAR JI Multi-Role Marketplace",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
@@ -1012,7 +1012,7 @@ fun WorkspaceSwitcherDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text("Switch Hunar Ji Workspace", style = MaterialTheme.typography.titleLarge)
+            Text("Switch HUNHAR JI Workspace", style = MaterialTheme.typography.titleLarge)
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
