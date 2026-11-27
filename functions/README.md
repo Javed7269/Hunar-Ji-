@@ -1,4 +1,4 @@
-# Hunar Ji Admin email/password + email OTP authentication
+# HUNHAR JI Admin email/password + email OTP authentication
 
 The Admin website uses a separate Firebase email/password account and a six-digit email OTP. Google sign-in is not used for Admin access.
 
