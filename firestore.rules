@@ -16,15 +16,14 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
+    // Admin privileges are granted only by trusted server code after email OTP MFA.
+    // Claims also carry a short-lived session expiry to limit stolen-token exposure.
     function isAdmin() {
-      return isSignedIn() && (
-        ('is_admin' in request.auth.token && request.auth.token.is_admin == true) ||
-        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
-        ('email' in request.auth.token &&
-         'email_verified' in request.auth.token &&
-         request.auth.token.email == 'hunarji47@gmail.com' &&
-         request.auth.token.email_verified == true)
-      );
+      return isSignedIn() &&
+        ('is_admin' in request.auth.token) &&
+        request.auth.token.is_admin == true &&
+        ('admin_session_expires_at' in request.auth.token) &&
+        request.auth.token.admin_session_expires_at > request.time.toMillis() / 1000;
     }
 
     function isValidId(id) {
@@ -425,10 +424,18 @@ service cloud.firestore {
 
     // --- COLLECTION RULES ---
 
+    // Admin membership is managed only by trusted Cloud Functions/Admin SDK.
     match /admins/{userId} {
-      allow get: if isSignedIn() && isValidId(userId) && (request.auth.uid == userId || isAdmin());
-      allow list: if isAdmin();
-      allow create, update, delete: if isAdmin() && isValidId(userId);
+      allow get, list: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    // Login challenges are private server-managed MFA state.
+    match /admin_login_challenges/{userId} {
+      allow read, write: if false;
+    }
+    match /system_security/{documentId} {
+      allow read, write: if false;
     }
 
     match /counters/{counterId} {
