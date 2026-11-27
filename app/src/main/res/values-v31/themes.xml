@@ -6,7 +6,7 @@
         <item name="android:statusBarColor">#E8F1FF</item>
         <item name="android:navigationBarColor">#FFFFFF</item>
         <item name="android:windowSplashScreenBackground">#E8F1FF</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_hunarji_logo_fg</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_hunharji_logo</item>
         <item name="android:windowSplashScreenBrandingImage">@drawable/img_hunarji_wordmark</item>
         <item name="android:windowSplashScreenAnimationDuration">900</item>
     </style>
