@@ -197,7 +197,7 @@ fun MechanicWorkspace(
         },
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.surface,
                 modifier = Modifier.navigationBarsPadding()
             ) {
                 val items = listOf(
@@ -449,7 +449,7 @@ private fun MechanicHomeContent(
                     Button(
                         onClick = onWithdraw,
                         shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = BrandBlueDark)
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = BrandBlueDark)
                     ) {
                         Text("Withdraw", fontWeight = FontWeight.Bold)
                     }
@@ -525,7 +525,7 @@ private fun MechanicHomeContent(
                     Card(
                         modifier = Modifier.width(126.dp),
                         shape = RoundedCornerShape(14.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                         border = BorderStroke(1.dp, Color(0xFFE2E8F0))
                     ) {
                         Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -780,7 +780,7 @@ private fun MechanicOrdersContent(
             items(filtered, key = { it.id }) { bk ->
                 Card(
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     border = BorderStroke(1.dp, Color(0xFFE2E8F0))
                 ) {
                     Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -836,14 +836,14 @@ private fun MechanicWalletContent(
                         Text("₹${balance.toInt()}", style = MaterialTheme.typography.displaySmall.copy(color = Color.White))
                         Text("Completed Jobs: $completedCount", style = MaterialTheme.typography.bodySmall, color = Color.White)
                     }
-                    Button(onClick = onWithdraw, colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = BrandBlueDark)) {
+                    Button(onClick = onWithdraw, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = BrandBlueDark)) {
                         Text("Withdraw")
                     }
                 }
             }
         }
         items(transactions, key = { it.id }) { tx ->
-            Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(tx.title, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
                     Text("₹${tx.amount.toInt()}", style = MaterialTheme.typography.titleMedium, color = BrandBlueDark)
@@ -875,7 +875,7 @@ private fun MechanicProfileSettingsContent(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         item {
-            Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Column(modifier = Modifier.fillMaxWidth().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(
                         painter = painterResource(id = R.drawable.img_worker_avatar),
@@ -908,7 +908,7 @@ private fun MechanicProfileSettingsContent(
             Triple("Switch Role Workspace", Icons.Default.Person, onSwitchApp)
         )
         items(menu) { (label, icon, act) ->
-            Card(modifier = Modifier.fillMaxWidth().clickable(onClick = act), shape = RoundedCornerShape(14.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(modifier = Modifier.fillMaxWidth().clickable(onClick = act), shape = RoundedCornerShape(14.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(icon, contentDescription = label, tint = BrandBlue)
                     Spacer(Modifier.width(12.dp))
@@ -918,7 +918,7 @@ private fun MechanicProfileSettingsContent(
             }
         }
         item {
-            Card(shape = RoundedCornerShape(14.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(14.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Row(modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Default.LocationOn, contentDescription = null, tint = BrandBlue)
                     Spacer(Modifier.width(12.dp))
