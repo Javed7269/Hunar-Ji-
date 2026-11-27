@@ -500,49 +500,121 @@ private fun FirebaseSetupRequiredScreen() {
 
 @Composable
 private fun HunarJiStartupScreen() {
-    val transition = rememberInfiniteTransition(label = "hunhar-brand")
+    val transition = rememberInfiniteTransition(label = "hunhar-loading")
     val brandRotation by transition.animateFloat(
         initialValue = 0f,
         targetValue = 360f,
-        animationSpec = infiniteRepeatable(animation = tween(durationMillis = 4200)),
-        label = "hunhar-brand-rotation"
+        animationSpec = infiniteRepeatable(animation = tween(durationMillis = 6200)),
+        label = "hunhar-wordmark-rotation"
+    )
+    val glow by transition.animateFloat(
+        initialValue = 0.72f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(animation = tween(durationMillis = 1500)),
+        label = "hunhar-glow"
     )
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(Color(0xFF071A45), Color(0xFF123B78), Color(0xFF08152F)))),
+            .background(
+                Brush.verticalGradient(
+                    colorStops = arrayOf(
+                        0.0f to Color(0xFF06132F),
+                        0.48f to Color(0xFF102F63),
+                        1.0f to Color(0xFF07152F)
+                    )
+                )
+            ),
         contentAlignment = Alignment.Center
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+        // Soft ambient colour fields keep the screen rich without competing
+        // with the supplied brand artwork.
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 88.dp)
+                .size(270.dp)
+                .background(
+                    Brush.radialGradient(
+                        colors = listOf(
+                            Color(0x5539C9FF),
+                            Color(0x1A795BFF),
+                            Color.Transparent
+                        )
+                    ),
+                    shape = androidx.compose.foundation.shape.CircleShape
+                )
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 28.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_hunharji_logo),
                 contentDescription = "HUNHAR JI logo",
-                modifier = Modifier.fillMaxWidth(0.68f).height(230.dp),
+                modifier = Modifier
+                    .fillMaxWidth(0.72f)
+                    .height(218.dp),
                 contentScale = ContentScale.Fit
             )
-            Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(22.dp))
             Text(
                 text = "HUNHAR JI",
-                modifier = Modifier.graphicsLayer { rotationZ = brandRotation },
+                modifier = Modifier.graphicsLayer {
+                    rotationY = brandRotation
+                    alpha = glow
+                },
                 style = MaterialTheme.typography.headlineLarge.copy(
-                    brush = Brush.sweepGradient(listOf(Color(0xFF00E5FF), Color(0xFFFFD740), Color(0xFFFF4081), Color(0xFF7C4DFF), Color(0xFF00E5FF))),
-                    fontWeight = FontWeight.Black,
-                    letterSpacing = 3.sp
+                    brush = Brush.linearGradient(
+                        listOf(
+                            Color(0xFF45E7FF),
+                            Color(0xFFFFD45A),
+                            Color(0xFFFF70B7),
+                            Color(0xFFB49BFF),
+                            Color(0xFF45E7FF)
+                        )
+                    ),
+                    fontWeight = FontWeight.ExtraBold,
+                    letterSpacing = 3.2.sp
                 )
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(30.dp))
+            Box(
+                modifier = Modifier
+                    .background(
+                        color = Color(0x22FFFFFF),
+                        shape = androidx.compose.foundation.shape.RoundedCornerShape(50)
+                    )
+                    .padding(horizontal = 20.dp, vertical = 11.dp)
+            ) {
+                androidx.compose.foundation.layout.Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    androidx.compose.material3.CircularProgressIndicator(
+                        color = Color(0xFFFFC85A),
+                        strokeWidth = 2.5.dp,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Text(
+                        text = "LOADING YOUR EXPERIENCE",
+                        color = Color(0xFFEAF4FF),
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 1.35.sp
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(22.dp))
             Text(
                 text = "SHOP  •  BOOK  •  EARN  •  GROW",
-                color = Color(0xFFE8F4FF),
-                fontSize = 12.sp,
+                color = Color(0xFFB9CDEB),
+                fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
-                letterSpacing = 1.4.sp
-            )
-            Spacer(modifier = Modifier.height(34.dp))
-            androidx.compose.material3.CircularProgressIndicator(
-                color = Color(0xFFFFC247),
-                strokeWidth = 3.dp,
-                modifier = Modifier.size(28.dp)
+                letterSpacing = 1.5.sp
             )
         }
     }
