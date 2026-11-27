@@ -32,6 +32,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.LaunchedEffect
@@ -41,6 +45,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -50,7 +55,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.data.firebase.HunarJiRepository
+import com.example.data.firebase.hunharjiRepository
 import com.example.data.firebase.authStateFlow
 import com.example.data.firebase.onGoogleSignInClicked
 import com.example.data.firebase.signOutUser
@@ -67,9 +72,9 @@ import com.example.ui.screens.customer.CustomerWorkspace
 import com.example.ui.screens.delivery.DeliveryWorkspace
 import com.example.ui.screens.mechanic.MechanicWorkspace
 import com.example.ui.screens.seller.SellerWorkspace
-import com.example.ui.theme.HunarJiTheme
+import com.example.ui.theme.hunharjiTheme
 import com.example.ui.viewmodel.AdminClaimState
-import com.example.ui.viewmodel.HunarJiViewModel
+import com.example.ui.viewmodel.hunharjiViewModel
 import com.example.ui.viewmodel.UiState
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -126,12 +131,12 @@ class MainActivity : ComponentActivity() {
                 delay(900)
                 startupComplete = true
             }
-            HunarJiTheme(darkTheme = darkTheme) {
+            hunharjiTheme(darkTheme = darkTheme) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     if (!startupComplete) {
-                        HunarJiStartupScreen()
+                        hunharjiStartupScreen()
                     } else if (firebaseConfigured) {
-                        HunarJiRoot()
+                        hunharjiRoot()
                     } else {
                         FirebaseSetupRequiredScreen()
                     }
@@ -142,7 +147,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun HunarJiRoot() {
+private fun hunharjiRoot() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val credentialManager = remember { CredentialManager.create(context) }
@@ -165,7 +170,7 @@ private fun HunarJiRoot() {
                     authScreenError = "Enter your registered 10-digit mobile number."
                 } else {
                     authScreenError = null
-                    Firebase.auth.signInWithEmailAndPassword("$mobileDigits@mobile.hunarji.in", pwd)
+                    Firebase.auth.signInWithEmailAndPassword("$mobileDigits@mobile.hunharji.in", pwd)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 pendingLogin = PendingCredentialLogin(mobileDigits, pwd)
@@ -200,7 +205,7 @@ private fun HunarJiRoot() {
         )
     } else {
         key(user.uid) {
-            HunarJiAuthenticatedShell(
+            hunharjiAuthenticatedShell(
                 user = user,
                 pendingLogin = pendingLogin,
                 pendingReset = pendingReset,
@@ -235,7 +240,7 @@ private fun HunarJiRoot() {
 }
 
 @Composable
-private fun HunarJiAuthenticatedShell(
+private fun hunharjiAuthenticatedShell(
     user: FirebaseUser,
     pendingLogin: PendingCredentialLogin?,
     pendingReset: PendingPasswordReset?,
@@ -250,19 +255,19 @@ private fun HunarJiAuthenticatedShell(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val viewModel: HunarJiViewModel = viewModel(
+    val viewModel: hunharjiViewModel = viewModel(
         key = user.uid,
         factory = viewModelFactory {
             initializer {
                 val appContext = context.applicationContext
                 val dbId = appContext.getString(R.string.firestore_database_id)
                 val db = FirebaseFirestore.getInstance(dbId)
-                val repo = HunarJiRepository(db = db, auth = Firebase.auth)
-                HunarJiViewModel(
+                val repo = hunharjiRepository(db = db, auth = Firebase.auth)
+                hunharjiViewModel(
                     repository = repo,
                     currentUserId = user.uid,
-                    currentUserEmail = user.email?.takeUnless { it.endsWith("@mobile.hunarji.in", ignoreCase = true) } ?: "",
-                    currentUserName = user.displayName ?: (user.email?.substringBefore("@") ?: "Hunar Ji User")
+                    currentUserEmail = user.email?.takeUnless { it.endsWith("@mobile.hunharji.in", ignoreCase = true) } ?: "",
+                    currentUserName = user.displayName ?: (user.email?.substringBefore("@") ?: "HUNHAR JI User")
                 )
             }
         }
@@ -406,13 +411,13 @@ private fun HunarJiAuthenticatedShell(
                                 context.startActivity(
                                     Intent(
                                         Intent.ACTION_VIEW,
-                                        Uri.parse("https://hunarji.netlify.app/admin/")
+                                        Uri.parse("https://hunharji.netlify.app/admin/")
                                     )
                                 )
                             } catch (error: Exception) {
                                 scope.launch {
                                     snackbarHostState.showSnackbar(
-                                        "Open the Hunar Ji Admin website in your browser to sign in with email and OTP."
+                                        "Open the HUNHAR JI Admin website in your browser to sign in with email and OTP."
                                     )
                                 }
                             }
@@ -444,7 +449,7 @@ private fun HunarJiAuthenticatedShell(
             title = { Text("Registration Submitted!") },
             text = {
                 Text(
-                    "Your unique Hunar Ji User ID is ${saved.hunarUserId} (${saved.role}). KYC Status: ${saved.kycStatus}."
+                    "Your unique HUNHAR JI User ID is ${saved.hunarUserId} (${saved.role}). KYC Status: ${saved.kycStatus}."
                 )
             },
             confirmButton = {
@@ -483,10 +488,10 @@ private fun FirebaseSetupRequiredScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Hunar Ji setup required")
+        Text("HUNHAR JI setup required")
         Text(
             "Firebase is not configured in this APK. Add the Firebase Android google-services.json " +
-                "for application ID com.aistudio.hunarji.mrxkpq, then rebuild the APK. " +
+                "for application ID com.aistudio.hunharji.mrxkpq, then rebuild the APK. " +
                 "Until then, sign-in, cloud data and role dashboards cannot work."
         )
     }
@@ -494,7 +499,7 @@ private fun FirebaseSetupRequiredScreen() {
 
 
 @Composable
-private fun HunarJiStartupScreen() {
+private fun hunharjiStartupScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -510,8 +515,8 @@ private fun HunarJiStartupScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_hunarji_logo_fg),
-                contentDescription = "Hunar Ji app logo",
+                painter = painterResource(id = R.drawable.ic_hunharji_logo_fg),
+                contentDescription = "HUNHAR JI app logo",
                 modifier = Modifier
                     .fillMaxWidth(0.62f)
                     .height(220.dp),
@@ -519,8 +524,8 @@ private fun HunarJiStartupScreen() {
             )
             Spacer(modifier = Modifier.height(10.dp))
             Image(
-                painter = painterResource(id = R.drawable.img_hunarji_wordmark),
-                contentDescription = "Hunar Ji",
+                painter = painterResource(id = R.drawable.img_hunharji_wordmark),
+                contentDescription = "HUNHAR JI",
                 modifier = Modifier
                     .fillMaxWidth(0.58f)
                     .height(58.dp),
