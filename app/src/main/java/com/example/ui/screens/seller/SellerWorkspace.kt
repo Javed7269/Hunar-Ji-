@@ -137,12 +137,12 @@ fun SellerWorkspace(
     }
 
     Scaffold(
-        containerColor = SurfaceLight,
+        containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             Column(
                 modifier = Modifier
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.surface)
                     .windowInsetsPadding(WindowInsets.statusBars)
             ) {
                 HunarJiTopAppHeader(
@@ -155,7 +155,7 @@ fun SellerWorkspace(
             }
         },
         bottomBar = {
-            NavigationBar(containerColor = Color.White, modifier = Modifier.navigationBarsPadding()) {
+            NavigationBar(containerColor = MaterialTheme.colorScheme.surface, modifier = Modifier.navigationBarsPadding()) {
                 val items = listOf(
                     Triple(SellerTab.HOME, "Home", Icons.Default.Home),
                     Triple(SellerTab.PRODUCTS, "Products", Icons.Default.Inventory2),
