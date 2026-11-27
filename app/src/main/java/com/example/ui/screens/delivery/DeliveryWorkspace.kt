@@ -167,12 +167,12 @@ fun DeliveryWorkspace(
     val activeOrder = myDeliveries.firstOrNull { it.status == "OUT_FOR_DELIVERY" } ?: myDeliveries.firstOrNull()
 
     Scaffold(
-        containerColor = SurfaceLight,
+        containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             Column(
                 modifier = Modifier
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.surface)
                     .windowInsetsPadding(WindowInsets.statusBars)
             ) {
                 HunarJiTopAppHeader(
@@ -185,7 +185,7 @@ fun DeliveryWorkspace(
             }
         },
         bottomBar = {
-            NavigationBar(containerColor = Color.White, modifier = Modifier.navigationBarsPadding()) {
+            NavigationBar(containerColor = MaterialTheme.colorScheme.surface, modifier = Modifier.navigationBarsPadding()) {
                 val items = listOf(
                     Triple(DeliveryTab.HOME, "Home", Icons.Default.Home),
                     Triple(DeliveryTab.ORDERS, "Orders", Icons.Default.ReceiptLong),
