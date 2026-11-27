@@ -215,16 +215,16 @@ fun AdminLoginScreen(
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 ClaimCheckStepRow(
-                                    label = if (isSignedIn) "1. Firebase Auth Signed In ($signedInEmail)" else "1. Sign in on the secure Admin website",
+                                    label = if (isSignedIn) "1. Admin email account authenticated" else "1. Sign in on the secure Admin website",
                                     done = isSignedIn
                                 )
                                 ClaimCheckStepRow(
-                                    label = "2. Refresh ID Token & Verify Approved Admin Access",
+                                    label = "2. Verify email OTP and active Admin session",
                                     done = claimState is AdminClaimState.Verified,
                                     failed = isDenied
                                 )
                                 ClaimCheckStepRow(
-                                    label = "3. Redirect to Protected Admin Dashboard",
+                                    label = "3. Open protected Admin dashboard",
                                     done = claimState is AdminClaimState.Verified
                                 )
                             }
@@ -269,7 +269,7 @@ fun AdminLoginScreen(
                                     Icon(Icons.Default.Security, contentDescription = null, tint = Color.White)
                                     Spacer(Modifier.width(8.dp))
                                     Text(
-                                        text = "Sign In & Verify Admin Claim",
+                                        text = "Open Admin Website (Email + Password + OTP)",
                                         style = MaterialTheme.typography.titleSmall.copy(
                                             color = Color.White,
                                             fontWeight = FontWeight.Bold
@@ -300,7 +300,7 @@ fun AdminLoginScreen(
                                     Icon(Icons.Default.Refresh, contentDescription = null, tint = Color.White)
                                     Spacer(Modifier.width(8.dp))
                                     Text(
-                                        text = "Re-verify 'is_admin' Claim",
+                                        text = "Refresh Admin Session",
                                         style = MaterialTheme.typography.titleSmall.copy(
                                             color = Color.White,
                                             fontWeight = FontWeight.Bold
