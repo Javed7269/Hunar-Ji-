@@ -1,0 +1,13 @@
+{
+  "name": "hunar-ji-admin-functions",
+  "description": "Trusted server functions for Hunar Ji administrator email OTP authentication",
+  "private": true,
+  "engines": { "node": "20" },
+  "main": "index.js",
+  "scripts": { "serve": "firebase emulators:start --only functions", "deploy": "firebase deploy --only functions" },
+  "dependencies": {
+    "firebase-admin": "^13.0.2",
+    "firebase-functions": "^6.3.2",
+    "nodemailer": "^6.10.0"
+  }
+}
