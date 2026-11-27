@@ -226,7 +226,7 @@ fun RegIdentityAndBankSection(
                 Checkbox(checked = kycConsent, onCheckedChange = onKycConsent)
                 Spacer(Modifier.width(6.dp))
                 Text(
-                    "I voluntarily consent to share my masked Aadhaar, PAN & Bank details for Hunar Ji KYC verification.",
+                    "I voluntarily consent to share my masked Aadhaar, PAN & Bank details for HUNHAR JI KYC verification.",
                     style = MaterialTheme.typography.bodySmall,
                     color = BrandBlueDark
                 )
@@ -531,7 +531,7 @@ fun RoleDocumentsUploadSection(
             Text("KYC Document Uploads", style = MaterialTheme.typography.titleMedium, color = BrandBlueDark)
         }
         Text(
-            "Capture via Camera, choose from Gallery, or upload PDF. Files are saved privately and reviewed by Hunar Ji Admin.",
+            "Capture via Camera, choose from Gallery, or upload PDF. Files are saved privately and reviewed by HUNHAR JI Admin.",
             style = MaterialTheme.typography.bodySmall,
             color = TextMuted
         )
