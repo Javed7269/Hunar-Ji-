@@ -1,9 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<defs><linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00e5ff"/><stop offset=".35" stop-color="#ffcf33"/><stop offset=".68" stop-color="#ff4081"/><stop offset="1" stop-color="#7c4dff"/></linearGradient><linearGradient id="h" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00e5ff"/><stop offset="1" stop-color="#ffb300"/></linearGradient></defs>
-<circle cx="256" cy="256" r="244" fill="#071a45" stroke="url(#ring)" stroke-width="18"/>
-<circle cx="256" cy="256" r="205" fill="none" stroke="#dce8ff" stroke-width="16" opacity=".8"/>
-<path d="M132 330V150h62v66h124v-66h62v180h-62v-62H194v62z" fill="url(#h)" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>
-<path d="M94 360l74-74 24 24-74 74zM342 140l54-54 22 22-54 54z" fill="#fff" opacity=".95"/>
-<path d="M110 390h292" stroke="#ffc247" stroke-width="12" stroke-linecap="round"/>
-<path d="M256 394l14 28 31 4-22 21 5 31-28-15-28 15 5-31-22-21 31-4z" fill="#ffc247"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="HUNHAR JI">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#102B5D"/><stop offset="1" stop-color="#07152F"/></linearGradient>
+ <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#37D8F4"/><stop offset=".48" stop-color="#FFC45A"/><stop offset="1" stop-color="#FF7BAA"/></linearGradient>
+ <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#42E5F4"/><stop offset=".55" stop-color="#76A7FF"/><stop offset="1" stop-color="#FFC45A"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>
+</defs>
+<circle cx="256" cy="256" r="244" fill="url(#bg)"/>
+<circle cx="256" cy="256" r="230" fill="none" stroke="url(#ring)" stroke-width="12"/>
+<circle cx="256" cy="256" r="208" fill="none" stroke="#D9E8FF" stroke-opacity=".3" stroke-width="2"/>
+<circle cx="256" cy="240" r="132" fill="#36D5F4" opacity=".13" filter="url(#shadow)"/>
+<path d="M142 328V150h57v62h114v-62h57v178h-57v-63H199v63z" fill="url(#mark)" stroke="#F7FBFF" stroke-width="8" stroke-linejoin="round"/>
+<path d="M104 357l61-61 20 20-61 61zM327 145l51-51 20 20-51 51z" fill="#fff"/>
+<path d="M120 382h272" stroke="#FFC45A" stroke-width="10" stroke-linecap="round"/>
+<path d="M256 390l11 22 24 3-18 17 4 24-21-12-21 12 4-24-18-17 24-3z" fill="#FFC45A"/>
 </svg>
