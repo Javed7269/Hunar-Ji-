@@ -484,7 +484,7 @@ private fun DeliveryDashboardContent(
                             .background(Brush.horizontalGradient(listOf(AccentAmberDark.copy(alpha = 0.92f), Color.Transparent)))
                     )
                     Column(modifier = Modifier.padding(16.dp).align(Alignment.CenterStart)) {
-                        Text("Deliver Happiness\nwith Hunar Ji", style = MaterialTheme.typography.titleLarge.copy(color = Color.White, fontWeight = FontWeight.ExtraBold))
+                        Text("Deliver Happiness\nwith HUNHAR JI", style = MaterialTheme.typography.titleLarge.copy(color = Color.White, fontWeight = FontWeight.ExtraBold))
                         Spacer(Modifier.height(4.dp))
                         Text("Fast pickups • Instant wallet credit", style = MaterialTheme.typography.bodySmall, color = Color.White)
                     }
