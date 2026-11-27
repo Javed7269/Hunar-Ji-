@@ -578,7 +578,7 @@ fun CustomerProductDetailScreen(
                             product.specs.forEach { (k, v) -> add(k to v) }
                         }
                         if (combinedSpecs.isEmpty()) {
-                            Text("Standard Hunar Ji verified specification", style = MaterialTheme.typography.bodySmall, color = TextMuted)
+                            Text("Standard HUNHAR JI verified specification", style = MaterialTheme.typography.bodySmall, color = TextMuted)
                         } else {
                             combinedSpecs.forEachIndexed { idx, (k, v) ->
                                 Row(
@@ -721,7 +721,7 @@ fun CustomerProductDetailScreen(
                             Spacer(Modifier.width(12.dp))
                             Column(modifier = Modifier.weight(1f)) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text(product.sellerName.ifBlank { "Verified Hunar Ji Seller" }, style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold))
+                                    Text(product.sellerName.ifBlank { "Verified HUNHAR JI Seller" }, style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold))
                                     Spacer(Modifier.width(6.dp))
                                     Icon(Icons.Default.Verified, contentDescription = "Verified Seller", tint = AccentGreen, modifier = Modifier.size(16.dp))
                                 }
