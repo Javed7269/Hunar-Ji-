@@ -40,7 +40,10 @@ function requireVerifiedUser(request) {
 }
 function requireAdmin(request) {
   const user = requireVerifiedUser(request);
-  if (request.auth.token.is_admin !== true) throw new HttpsError("permission-denied", "Administrator access is required.");
+  if (request.auth.token.is_admin !== true ||
+      Number(request.auth.token.admin_session_expires_at || 0) <= Math.floor(Date.now() / 1000)) {
+    throw new HttpsError("permission-denied", "An active Admin MFA session is required.");
+  }
   return user;
 }
 function mailer() {
