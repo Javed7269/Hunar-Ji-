@@ -1277,7 +1277,7 @@ private fun TermsCheckboxRow(
         Checkbox(checked = checked, onCheckedChange = onCheckedChange)
         Spacer(Modifier.width(4.dp))
         Text(
-            text = "I agree to the Hunar Ji Terms & Conditions and Privacy Policy.",
+            text = "I agree to the HUNHAR JI Terms & Conditions and Privacy Policy.",
             style = MaterialTheme.typography.bodySmall,
             color = TextSecondary
         )
@@ -1316,7 +1316,7 @@ private fun RegistrationSuccessScreen(
                 Text("Registration Submitted!", style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.ExtraBold), color = TextPrimary)
                 Surface(color = BrandBlueLight, shape = RoundedCornerShape(14.dp), modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Your Unique Hunar Ji User ID", style = MaterialTheme.typography.labelSmall, color = TextSecondary)
+                        Text("Your Unique HUNHAR JI User ID", style = MaterialTheme.typography.labelSmall, color = TextSecondary)
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = application.hunarUserId,
