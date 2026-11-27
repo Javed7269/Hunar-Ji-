@@ -169,11 +169,10 @@ suspend fun verifyAdminCustomClaim(
     return try {
         val tokenResult = user.getIdToken(forceRefresh).await()
         val hasAdminClaim = extractIsAdminClaim(tokenResult.claims)
-        // Match the bootstrap administrator allowlist already enforced by firestore.rules.
-        // The allowlisted address must also be verified by Firebase Authentication.
-        val isVerifiedBootstrapAdmin =
-            user.email.equals("hunarji47@gmail.com", ignoreCase = true) && user.isEmailVerified
-        if (hasAdminClaim || isVerifiedBootstrapAdmin) {
+        val sessionExpiry = (tokenResult.claims["admin_session_expires_at"] as? Number)?.toLong() ?: 0L
+        val sessionIsActive = sessionExpiry > System.currentTimeMillis() / 1000L
+        // Admin access is granted only after trusted server-side email OTP verification.
+        if (hasAdminClaim && sessionIsActive) {
             AdminClaimVerificationResult.Verified(
                 uid = user.uid,
                 email = user.email.orEmpty(),
@@ -181,7 +180,7 @@ suspend fun verifyAdminCustomClaim(
             )
         } else {
             AdminClaimVerificationResult.Denied(
-                reason = "Access denied: this account is not an approved Admin. Sign in with the verified bootstrap Admin account or ask the server administrator to assign the is_admin custom claim.",
+                reason = "Access denied: complete Admin email/password login and email OTP verification on the secure Admin website.",
                 email = user.email.orEmpty()
             )
         }
