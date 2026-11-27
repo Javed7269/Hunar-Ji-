@@ -6,6 +6,15 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'app/**'
+      - 'gradle/**'
+      - 'gradlew'
+      - 'gradlew.bat'
+      - 'settings.gradle*'
+      - 'build.gradle*'
+      - 'gradle.properties'
+      - 'google-services.json'
 
 permissions:
   contents: write
