@@ -194,9 +194,9 @@ fun SellerWorkspace(
                 when (currentTab) {
                     SellerTab.HOME -> SellerDashboardContent(
                         sellerName = profile?.displayName?.ifBlank { "Seller Partner" } ?: "Seller Partner",
-                        shopName = myKyc?.shopName?.ifBlank { profile?.shopName ?: "My Hunar Ji Store" }
-                            ?: profile?.shopName?.ifBlank { "My Hunar Ji Store" }
-                            ?: "My Hunar Ji Store",
+                        shopName = myKyc?.shopName?.ifBlank { profile?.shopName ?: "My HUNHAR JI Store" }
+                            ?: profile?.shopName?.ifBlank { "My HUNHAR JI Store" }
+                            ?: "My HUNHAR JI Store",
                         hunarUserId = profile?.hunarUserId ?: "",
                         fallbackKycStatus = profile?.kycStatus ?: "NOT_SUBMITTED",
                         kyc = myKyc,
@@ -420,7 +420,7 @@ private fun SellerDashboardContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Grow Your Business\nwith Hunar Ji", style = MaterialTheme.typography.titleMedium.copy(color = Color.White, fontWeight = FontWeight.ExtraBold))
+                        Text("Grow Your Business\nwith HUNHAR JI", style = MaterialTheme.typography.titleMedium.copy(color = Color.White, fontWeight = FontWeight.ExtraBold))
                         Text("Zero-hassle inventory, UPI payouts & nationwide delivery", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.9f))
                     }
                     Icon(Icons.Default.TrendingUp, contentDescription = null, tint = Color.White, modifier = Modifier.size(44.dp))
