@@ -5,7 +5,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">#071A45</item>
         <item name="android:navigationBarColor">#08152F</item>
-        <item name="android:windowSplashScreenBackground">#E8F1FF</item>
+        <item name="android:windowSplashScreenBackground">#06132F</item>
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_hunharji_logo</item>
         <item name="android:windowSplashScreenBrandingImage">@drawable/ic_hunharji_logo</item>
         <item name="android:windowSplashScreenAnimationDuration">900</item>
