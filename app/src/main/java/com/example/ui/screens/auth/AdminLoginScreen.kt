@@ -83,7 +83,7 @@ fun AdminLoginScreen(
     BackHandler { onBack() }
 
     Scaffold(
-        containerColor = Color(0xFFF3F8FF),
+        containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             Row(
@@ -107,7 +107,7 @@ fun AdminLoginScreen(
                     text = "Protected Admin Portal",
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Bold,
-                        color = TextPrimary
+                        color = MaterialTheme.colorScheme.onSurface
                     ),
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
@@ -121,7 +121,7 @@ fun AdminLoginScreen(
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(Color(0xFFE0EDFF), Color(0xFFF5F9FF), Color.White)
+                        colors = listOf(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.surface)
                     )
                 )
                 .padding(innerPadding)
@@ -142,9 +142,9 @@ fun AdminLoginScreen(
 
                 Card(
                     shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-                    border = BorderStroke(1.dp, Color(0xFFE2E8F0)),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -192,22 +192,22 @@ fun AdminLoginScreen(
                                 else -> "Admin Sign-In"
                             },
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.ExtraBold),
-                            color = TextPrimary,
+                            color = MaterialTheme.colorScheme.onSurface,
                             textAlign = TextAlign.Center
                         )
 
                         Text(
                             text = "This portal verifies the Firebase Authentication ID token and grants Admin access only to an account with the server-issued 'is_admin' claim or the verified bootstrap Admin account.",
                             style = MaterialTheme.typography.bodySmall,
-                            color = TextSecondary,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center
                         )
 
                         // Verification Checklist Preview
                         Surface(
-                            color = Color(0xFFF8FAFC),
+                            color = MaterialTheme.colorScheme.surfaceVariant,
                             shape = RoundedCornerShape(14.dp),
-                            border = BorderStroke(1.dp, Color(0xFFE2E8F0)),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(
