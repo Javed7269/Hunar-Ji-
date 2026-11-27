@@ -182,7 +182,7 @@ fun AdminOrdersModule(
             },
             onShareInvoice = {
                 val invoiceText = buildString {
-                    appendLine("HUNAR JI TAX INVOICE")
+                    appendLine("HUNHAR JI TAX INVOICE")
                     appendLine("Order ID: #${ord.id}")
                     appendLine("Customer: ${ord.customerName}")
                     appendLine("Seller: ${ord.sellerName}")
@@ -196,7 +196,7 @@ fun AdminOrdersModule(
                 }
                 val share = Intent(Intent.ACTION_SEND).apply {
                     type = "text/plain"
-                    putExtra(Intent.EXTRA_SUBJECT, "Hunar Ji Invoice #${ord.id}")
+                    putExtra(Intent.EXTRA_SUBJECT, "HUNHAR JI Invoice #${ord.id}")
                     putExtra(Intent.EXTRA_TEXT, invoiceText)
                 }
                 context.startActivity(Intent.createChooser(share, "Share Invoice"))
@@ -645,7 +645,7 @@ fun AdminPaymentGatewayModule(
                     ToggleSettingRow("UPI Payments (GPay / PhonePe / Paytm)", upi) { upi = it }
                     ToggleSettingRow("Credit / Debit Cards", card) { card = it }
                     ToggleSettingRow("Net Banking", netBanking) { netBanking = it }
-                    ToggleSettingRow("Hunar Ji Wallet", wallet) { wallet = it }
+                    ToggleSettingRow("HUNHAR JI Wallet", wallet) { wallet = it }
                     ToggleSettingRow("Cash on Delivery (COD)", cod) { cod = it }
                     Spacer(Modifier.height(8.dp))
                     Button(
@@ -959,7 +959,7 @@ fun AdminReportsModule(
                             }
                             val share = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/csv"
-                                putExtra(Intent.EXTRA_SUBJECT, "Hunar Ji Platform Report CSV")
+                                putExtra(Intent.EXTRA_SUBJECT, "HUNHAR JI Platform Report CSV")
                                 putExtra(Intent.EXTRA_TEXT, csv)
                             }
                             context.startActivity(Intent.createChooser(share, "Export CSV Report"))
@@ -1082,7 +1082,7 @@ fun AdminSupportModule(
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             OutlinedButton(onClick = { replyingTo = t; replyText = t.adminReply }) { Text("Reply") }
                             if (t.status != "RESOLVED") {
-                                Button(onClick = { onReplyTicket(t.id, "RESOLVED", t.adminReply.ifBlank { "Resolved by Hunar Ji Support." }) }) {
+                                Button(onClick = { onReplyTicket(t.id, "RESOLVED", t.adminReply.ifBlank { "Resolved by HUNHAR JI Support." }) }) {
                                     Text("Mark Resolved")
                                 }
                             }
