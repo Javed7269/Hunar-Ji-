@@ -161,14 +161,14 @@ fun HunarJiBrandWordmark(
         )
         Spacer(Modifier.width(6.dp))
         Column {
-            Image(
-                painter = painterResource(id = R.drawable.img_hunarji_wordmark),
-                contentDescription = "HUNHAR JI",
-                modifier = Modifier
-                    .height(28.dp)
-                    .width(92.dp),
-                contentScale = ContentScale.Fit,
-                alignment = Alignment.CenterStart
+            Text(
+                text = "HUNHAR JI",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Black,
+                    color = BrandBlueDeep,
+                    letterSpacing = 0.8.sp
+                ),
+                maxLines = 1
             )
             if (!subtitle.isNullOrBlank()) {
                 Text(
@@ -200,13 +200,13 @@ fun HunarJiCenteredLogoHeader(
             contentScale = ContentScale.Fit
         )
         Spacer(Modifier.height(2.dp))
-        Image(
-            painter = painterResource(id = R.drawable.img_hunarji_wordmark),
-            contentDescription = "HUNHAR JI",
-            modifier = Modifier
-                .height(48.dp)
-                .width(168.dp),
-            contentScale = ContentScale.Fit
+        Text(
+            text = "HUNHAR JI",
+            style = MaterialTheme.typography.headlineSmall.copy(
+                fontWeight = FontWeight.Black,
+                color = BrandBlueDeep,
+                letterSpacing = 1.2.sp
+            )
         )
         if (subtitle.isNotBlank()) {
             Spacer(Modifier.height(2.dp))
