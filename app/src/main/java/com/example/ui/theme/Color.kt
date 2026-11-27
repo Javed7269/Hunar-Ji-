@@ -2,7 +2,7 @@ package com.example.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Primary Brand Palette (Hunar Ji Royal Blue & White + Orange/Amber Accents)
+// Primary Brand Palette (HUNHAR JI Royal Blue & White + Orange/Amber Accents)
 val BrandBlue = Color(0xFF0D5BD9)
 val BrandBlueDark = Color(0xFF0A3D9E)
 val BrandBlueDeep = Color(0xFF082E7A)
