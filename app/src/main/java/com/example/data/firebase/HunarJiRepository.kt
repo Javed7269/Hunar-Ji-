@@ -301,7 +301,7 @@ class HunarJiRepository(
         val docRef = db.collection("users").document(uid)
         val snap = docRef.get().await()
         if (!snap.exists()) {
-            val cleanName = displayName.ifBlank { email.substringBefore("@").ifBlank { "Hunar Ji User" } }
+            val cleanName = displayName.ifBlank { email.substringBefore("@").ifBlank { "HUNHAR JI User" } }
             val refCode = "HJ" + uid.take(6).uppercase()
             val payload = mapOf(
                 "userId" to uid,
@@ -340,7 +340,7 @@ class HunarJiRepository(
         val path = "users/$uid"
         return runSafe(OperationType.UPDATE, path) {
             val updates = mapOf(
-                "displayName" to displayName.trim().ifBlank { "Hunar Ji User" }.take(80),
+                "displayName" to displayName.trim().ifBlank { "HUNHAR JI User" }.take(80),
                 "phone" to phone.trim().take(24),
                 "city" to city.trim().take(80),
                 "district" to district.trim().take(80),
@@ -379,7 +379,7 @@ class HunarJiRepository(
                     "title" to product.title.take(120),
                     "category" to product.category.take(60),
                     "sellerId" to product.sellerId.ifBlank { uid },
-                    "sellerName" to product.sellerName.ifBlank { "Hunar Ji Seller" }.take(100),
+                    "sellerName" to product.sellerName.ifBlank { "HUNHAR JI Seller" }.take(100),
                     "price" to product.price.coerceAtLeast(0.0),
                     "originalPrice" to product.originalPrice.coerceAtLeast(product.price),
                     "quantity" to 1L,
@@ -497,7 +497,7 @@ class HunarJiRepository(
         val path = "orders/$orderId"
         return runSafeValue(OperationType.CREATE, path) {
             val firstSellerId = cartItems.first().sellerId.ifBlank { uid }
-            val firstSellerName = cartItems.first().sellerName.ifBlank { "Hunar Ji Seller" }
+            val firstSellerName = cartItems.first().sellerName.ifBlank { "HUNHAR JI Seller" }
             val summary = cartItems.joinToString(", ") { "${it.title} x${it.quantity}" }.take(390)
             val totalQty = cartItems.sumOf { it.quantity }.coerceAtLeast(1L)
             val payStatus = when (paymentMethod) {
@@ -1471,7 +1471,7 @@ class HunarJiRepository(
                     title = "Refund for Return #$requestId",
                     referenceId = requestId
                 )
-                addNotification(targetUid, "Refund Credited ₹${refundAmount.toInt()}", "Refund for #$requestId credited to Hunar Ji wallet.", "WALLET")
+                addNotification(targetUid, "Refund Credited ₹${refundAmount.toInt()}", "Refund for #$requestId credited to HUNHAR JI wallet.", "WALLET")
             }
             if (actorEmail.isNotBlank()) {
                 try {
@@ -1970,7 +1970,7 @@ class HunarJiRepository(
             } else ""
 
             if (!userSnap.exists()) {
-                val cleanName = application.fullName.trim().ifBlank { "Hunar Ji User" }.take(80)
+                val cleanName = application.fullName.trim().ifBlank { "HUNHAR JI User" }.take(80)
                 val refCode = "HJ" + uid.take(6).uppercase()
                 userRef.set(
                     mapOf(
@@ -2011,7 +2011,7 @@ class HunarJiRepository(
             } else {
                 userRef.update(
                     mapOf(
-                        "displayName" to application.fullName.trim().ifBlank { userSnap.getString("displayName") ?: "Hunar Ji User" }.take(80),
+                        "displayName" to application.fullName.trim().ifBlank { userSnap.getString("displayName") ?: "HUNHAR JI User" }.take(80),
                         "email" to email,
                         "phone" to application.mobile.trim().take(24),
                         "role" to role,
@@ -2173,7 +2173,7 @@ class HunarJiRepository(
             if (role in listOf("MECHANIC", "SELLER", "DELIVERY")) {
                 val provRef = db.collection("providers").document(uid)
                 val provSnap = provRef.get().await()
-                val provName = application.fullName.trim().ifBlank { "Hunar Ji Partner" }.take(80)
+                val provName = application.fullName.trim().ifBlank { "HUNHAR JI Partner" }.take(80)
                 if (!provSnap.exists()) {
                     provRef.set(
                         mapOf(
@@ -2229,7 +2229,7 @@ class HunarJiRepository(
                 uid = uid,
                 title = "Registration Submitted ($hunarUserId)",
                 message = if (role == "CUSTOMER") {
-                    "Welcome to Hunar Ji! Your Customer ID is $hunarUserId."
+                    "Welcome to HUNHAR JI! Your Customer ID is $hunarUserId."
                 } else {
                     "Your $role KYC ($hunarUserId) is pending Admin review."
                 },
@@ -2414,7 +2414,7 @@ class HunarJiRepository(
             addNotification(
                 uid = targetUid,
                 title = "KYC Status: $newKycStatus",
-                message = adminNotes.trim().ifBlank { "Your Hunar Ji KYC verification status is now $newKycStatus." },
+                message = adminNotes.trim().ifBlank { "Your HUNHAR JI KYC verification status is now $newKycStatus." },
                 category = "KYC"
             )
             logAdminAction(adminUid, adminEmail, "KYC_$newKycStatus", "kyc_applications", targetUid, "Status $prevStatus -> $newKycStatus | $accountStatus")
