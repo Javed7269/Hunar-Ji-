@@ -165,7 +165,7 @@ fun HunarJiBrandWordmark(
                 text = "HUNHAR JI",
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Black,
-                    color = BrandBlueDeep,
+                    color = MaterialTheme.colorScheme.onSurface,
                     letterSpacing = 0.8.sp
                 ),
                 maxLines = 1
@@ -204,7 +204,7 @@ fun HunarJiCenteredLogoHeader(
             text = "HUNHAR JI",
             style = MaterialTheme.typography.headlineSmall.copy(
                 fontWeight = FontWeight.Black,
-                color = BrandBlueDeep,
+                color = MaterialTheme.colorScheme.onSurface,
                 letterSpacing = 1.2.sp
             )
         )
@@ -261,7 +261,7 @@ fun HunarJiTopAppHeader(
     showWorkspaceSwitcher: Boolean = false
 ) {
     Surface(
-        color = Color.White,
+        color = MaterialTheme.colorScheme.surface,
         shadowElevation = 2.dp
     ) {
         Row(
