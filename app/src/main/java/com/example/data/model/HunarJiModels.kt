@@ -19,7 +19,7 @@ enum class PaymentMethod(val displayName: String) {
     RAZORPAY("Razorpay"),
     CARD("Debit / Credit Card"),
     NET_BANKING("Net Banking"),
-    WALLET("Hunar Ji Wallet"),
+    WALLET("HUNHAR JI Wallet"),
     COD("Cash on Delivery");
 
     companion object {
