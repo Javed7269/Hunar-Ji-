@@ -386,7 +386,7 @@ private fun DeliveryDashboardContent(
         }
         // Blue Welcome Banner + Today's Earning (matching Image 2)
         item {
-            Card(shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Column(modifier = Modifier.padding(14.dp)) {
                     Box(
                         modifier = Modifier
@@ -496,7 +496,7 @@ private fun DeliveryDashboardContent(
 
 @Composable
 private fun DeliveryStatTile(label: String, value: String, color: Color, modifier: Modifier = Modifier) {
-    Card(modifier = modifier, shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, Color(0xFFE2E8F0))) {
+    Card(modifier = modifier, shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = BorderStroke(1.dp, Color(0xFFE2E8F0))) {
         Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(value, style = MaterialTheme.typography.titleMedium.copy(color = color, fontWeight = FontWeight.Bold))
             Text(label, style = MaterialTheme.typography.labelSmall, color = TextSecondary)
@@ -512,7 +512,7 @@ private fun DeliveryQuickTile(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(modifier = modifier.clickable(onClick = onClick), shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, Color(0xFFE2E8F0))) {
+    Card(modifier = modifier.clickable(onClick = onClick), shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = BorderStroke(1.dp, Color(0xFFE2E8F0))) {
         Column(modifier = Modifier.padding(vertical = 10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(icon, contentDescription = label, tint = tint)
             Spacer(Modifier.height(4.dp))
@@ -582,7 +582,7 @@ private fun DeliveryOrdersContent(
             items(displayList, key = { it.id }) { ord ->
                 Card(
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     border = BorderStroke(1.dp, Color(0xFFE2E8F0))
                 ) {
                     Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -667,7 +667,7 @@ private fun DeliveryLiveTrackingContent(
             }
         } else {
             item {
-                Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                     Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                             Text("Order #${order.id}", style = MaterialTheme.typography.titleMedium)
@@ -747,7 +747,7 @@ private fun DeliveryWalletContent(
                         Text("Available Balance", color = Color.White.copy(alpha = 0.85f))
                         Text("₹${balance.toInt()}", style = MaterialTheme.typography.displaySmall.copy(color = Color.White))
                     }
-                    Button(onClick = onWithdraw, colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = BrandBlueDark)) {
+                    Button(onClick = onWithdraw, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = BrandBlueDark)) {
                         Text("Withdraw")
                     }
                 }
@@ -760,7 +760,7 @@ private fun DeliveryWalletContent(
             }
         }
         items(transactions, key = { it.id }) { tx ->
-            Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(tx.title, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
                     Text("₹${tx.amount.toInt()}", style = MaterialTheme.typography.titleMedium, color = BrandBlueDark)
@@ -798,7 +798,7 @@ private fun DeliveryProfileContent(
             )
         }
         item {
-            Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter = painterResource(id = R.drawable.img_worker_avatar),
@@ -827,7 +827,7 @@ private fun DeliveryProfileContent(
             "Help & Support" to Icons.Default.HeadsetMic
         )
         items(rows) { (title, icon) ->
-            Card(shape = RoundedCornerShape(14.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(14.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(icon, contentDescription = title, tint = BrandBlue)
                     Spacer(Modifier.width(12.dp))
