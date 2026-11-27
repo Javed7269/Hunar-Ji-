@@ -81,7 +81,7 @@ exports.requestAdminEmailOtp = onCall({ secrets: mailSecrets, enforceAppCheck: f
   const user = requireVerifiedUser(request);
   const adminSnap = await db.doc("admins/" + user.uid).get();
   if (!adminSnap.exists || adminSnap.get("status") !== "ACTIVE" || adminSnap.get("email") !== user.email) {
-    throw new HttpsError("permission-denied", "This email is not registered as an active Hunar Ji administrator.");
+    throw new HttpsError("permission-denied", "This email is not registered as an active HUNHAR JI administrator.");
   }
   const challengeRef = db.doc("admin_login_challenges/" + user.uid);
   const now = Date.now();
@@ -101,9 +101,9 @@ exports.requestAdminEmailOtp = onCall({ secrets: mailSecrets, enforceAppCheck: f
     await mailer().sendMail({
       from: SMTP_FROM.value(),
       to: user.email,
-      subject: "Your Hunar Ji Admin login code",
-      text: "Your Hunar Ji Admin verification code is " + otp + ". It expires in 5 minutes. Do not share this code with anyone.",
-      html: "<div style=\"font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:24px\"><h2>Hunar Ji Admin security check</h2><p>Your one-time login code is:</p><div style=\"font-size:32px;font-weight:800;letter-spacing:8px;padding:16px;background:#f1f5f9;border-radius:12px\">" + otp + "</div><p>This code expires in 5 minutes. Never share it with anyone.</p><p>If you did not request this code, secure your account immediately.</p></div>"
+      subject: "Your HUNHAR JI Admin login code",
+      text: "Your HUNHAR JI Admin verification code is " + otp + ". It expires in 5 minutes. Do not share this code with anyone.",
+      html: "<div style=\"font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:24px\"><h2>HUNHAR JI Admin security check</h2><p>Your one-time login code is:</p><div style=\"font-size:32px;font-weight:800;letter-spacing:8px;padding:16px;background:#f1f5f9;border-radius:12px\">" + otp + "</div><p>This code expires in 5 minutes. Never share it with anyone.</p><p>If you did not request this code, secure your account immediately.</p></div>"
     });
   } catch (error) {
     await challengeRef.delete().catch(() => {});
