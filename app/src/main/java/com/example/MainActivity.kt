@@ -55,7 +55,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.data.firebase.hunharjiRepository
+import com.example.data.firebase.HunarJiRepository
 import com.example.data.firebase.authStateFlow
 import com.example.data.firebase.onGoogleSignInClicked
 import com.example.data.firebase.signOutUser
@@ -72,9 +72,9 @@ import com.example.ui.screens.customer.CustomerWorkspace
 import com.example.ui.screens.delivery.DeliveryWorkspace
 import com.example.ui.screens.mechanic.MechanicWorkspace
 import com.example.ui.screens.seller.SellerWorkspace
-import com.example.ui.theme.hunharjiTheme
+import com.example.ui.theme.HunarJiTheme
 import com.example.ui.viewmodel.AdminClaimState
-import com.example.ui.viewmodel.hunharjiViewModel
+import com.example.ui.viewmodel.HunarJiViewModel
 import com.example.ui.viewmodel.UiState
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -131,12 +131,12 @@ class MainActivity : ComponentActivity() {
                 delay(900)
                 startupComplete = true
             }
-            hunharjiTheme(darkTheme = darkTheme) {
+            HunarJiTheme(darkTheme = darkTheme) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     if (!startupComplete) {
-                        hunharjiStartupScreen()
+                        HunarJiStartupScreen()
                     } else if (firebaseConfigured) {
-                        hunharjiRoot()
+                        HunarJiRoot()
                     } else {
                         FirebaseSetupRequiredScreen()
                     }
@@ -147,7 +147,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun hunharjiRoot() {
+private fun HunarJiRoot() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val credentialManager = remember { CredentialManager.create(context) }
@@ -170,7 +170,7 @@ private fun hunharjiRoot() {
                     authScreenError = "Enter your registered 10-digit mobile number."
                 } else {
                     authScreenError = null
-                    Firebase.auth.signInWithEmailAndPassword("$mobileDigits@mobile.hunharji.in", pwd)
+                    Firebase.auth.signInWithEmailAndPassword("$mobileDigits@mobile.hunarji.in", pwd)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 pendingLogin = PendingCredentialLogin(mobileDigits, pwd)
@@ -205,7 +205,7 @@ private fun hunharjiRoot() {
         )
     } else {
         key(user.uid) {
-            hunharjiAuthenticatedShell(
+            HunarJiAuthenticatedShell(
                 user = user,
                 pendingLogin = pendingLogin,
                 pendingReset = pendingReset,
@@ -240,7 +240,7 @@ private fun hunharjiRoot() {
 }
 
 @Composable
-private fun hunharjiAuthenticatedShell(
+private fun HunarJiAuthenticatedShell(
     user: FirebaseUser,
     pendingLogin: PendingCredentialLogin?,
     pendingReset: PendingPasswordReset?,
@@ -255,18 +255,18 @@ private fun hunharjiAuthenticatedShell(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val viewModel: hunharjiViewModel = viewModel(
+    val viewModel: HunarJiViewModel = viewModel(
         key = user.uid,
         factory = viewModelFactory {
             initializer {
                 val appContext = context.applicationContext
                 val dbId = appContext.getString(R.string.firestore_database_id)
                 val db = FirebaseFirestore.getInstance(dbId)
-                val repo = hunharjiRepository(db = db, auth = Firebase.auth)
-                hunharjiViewModel(
+                val repo = HunarJiRepository(db = db, auth = Firebase.auth)
+                HunarJiViewModel(
                     repository = repo,
                     currentUserId = user.uid,
-                    currentUserEmail = user.email?.takeUnless { it.endsWith("@mobile.hunharji.in", ignoreCase = true) } ?: "",
+                    currentUserEmail = user.email?.takeUnless { it.endsWith("@mobile.hunarji.in", ignoreCase = true) } ?: "",
                     currentUserName = user.displayName ?: (user.email?.substringBefore("@") ?: "HUNHAR JI User")
                 )
             }
@@ -411,7 +411,7 @@ private fun hunharjiAuthenticatedShell(
                                 context.startActivity(
                                     Intent(
                                         Intent.ACTION_VIEW,
-                                        Uri.parse("https://hunharji.netlify.app/admin/")
+                                        Uri.parse("https://hunarji.netlify.app/admin/")
                                     )
                                 )
                             } catch (error: Exception) {
@@ -491,7 +491,7 @@ private fun FirebaseSetupRequiredScreen() {
         Text("HUNHAR JI setup required")
         Text(
             "Firebase is not configured in this APK. Add the Firebase Android google-services.json " +
-                "for application ID com.aistudio.hunharji.mrxkpq, then rebuild the APK. " +
+                "for application ID com.aistudio.hunarji.mrxkpq, then rebuild the APK. " +
                 "Until then, sign-in, cloud data and role dashboards cannot work."
         )
     }
@@ -499,48 +499,48 @@ private fun FirebaseSetupRequiredScreen() {
 
 
 @Composable
-private fun hunharjiStartupScreen() {
+private fun HunarJiStartupScreen() {
+    val transition = rememberInfiniteTransition(label = "hunhar-brand")
+    val brandRotation by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(animation = tween(durationMillis = 4200)),
+        label = "hunhar-brand-rotation"
+    )
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(Color(0xFFE8F1FF), Color(0xFFF8FBFF), Color.White)
-                )
-            ),
+            .background(Brush.verticalGradient(listOf(Color(0xFF071A45), Color(0xFF123B78), Color(0xFF08152F)))),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             Image(
-                painter = painterResource(id = R.drawable.ic_hunharji_logo_fg),
-                contentDescription = "HUNHAR JI app logo",
-                modifier = Modifier
-                    .fillMaxWidth(0.62f)
-                    .height(220.dp),
+                painter = painterResource(id = R.drawable.ic_hunharji_logo),
+                contentDescription = "HUNHAR JI logo",
+                modifier = Modifier.fillMaxWidth(0.68f).height(230.dp),
                 contentScale = ContentScale.Fit
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            Image(
-                painter = painterResource(id = R.drawable.img_hunharji_wordmark),
-                contentDescription = "HUNHAR JI",
-                modifier = Modifier
-                    .fillMaxWidth(0.58f)
-                    .height(58.dp),
-                contentScale = ContentScale.Fit
+            Spacer(modifier = Modifier.height(18.dp))
+            Text(
+                text = "HUNHAR JI",
+                modifier = Modifier.graphicsLayer { rotationZ = brandRotation },
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    brush = Brush.sweepGradient(listOf(Color(0xFF00E5FF), Color(0xFFFFD740), Color(0xFFFF4081), Color(0xFF7C4DFF), Color(0xFF00E5FF))),
+                    fontWeight = FontWeight.Black,
+                    letterSpacing = 3.sp
+                )
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "SHOP  •  BOOK  •  EARN  •  GROW",
-                color = Color(0xFF31527C),
+                color = Color(0xFFE8F4FF),
                 fontSize = 12.sp,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                letterSpacing = 1.4.sp
             )
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(34.dp))
             androidx.compose.material3.CircularProgressIndicator(
-                color = Color(0xFF1769C2),
+                color = Color(0xFFFFC247),
                 strokeWidth = 3.dp,
                 modifier = Modifier.size(28.dp)
             )
