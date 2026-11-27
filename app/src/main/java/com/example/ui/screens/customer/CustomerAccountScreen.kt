@@ -138,12 +138,12 @@ fun CustomerAccountScreen(
                                 Spacer(Modifier.height(6.dp))
                                 OutlinedButton(
                                     onClick = {
-                                        val inviteText = "Join me on Hunar Ji! Use my referral code: $referralCode\\nDownload the app: https://github.com/Javed7269/Hunar-Ji-/releases/latest/download/hunar-ji-debug.apk"
+                                        val inviteText = "Join me on HUNHAR JI! Use my referral code: $referralCode\\nDownload the app: https://github.com/Javed7269/Hunar-Ji-/releases/latest/download/hunar-ji-debug.apk"
                                         val shareIntent = Intent(Intent.ACTION_SEND).apply {
                                             type = "text/plain"
                                             putExtra(Intent.EXTRA_TEXT, inviteText)
                                         }
-                                        context.startActivity(Intent.createChooser(shareIntent, "Share Hunar Ji invite"))
+                                        context.startActivity(Intent.createChooser(shareIntent, "Share HUNHAR JI invite"))
                                     },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
