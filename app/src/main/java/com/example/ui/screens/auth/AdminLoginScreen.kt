@@ -136,7 +136,7 @@ fun AdminLoginScreen(
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 HunarJiCenteredLogoHeader(
-                    subtitle = "Admin Panel • Token Claim Security",
+                    subtitle = "Admin Panel • Email OTP Security",
                     logoSize = 62.dp
                 )
 
@@ -215,7 +215,7 @@ fun AdminLoginScreen(
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 ClaimCheckStepRow(
-                                    label = if (isSignedIn) "1. Firebase Auth Signed In ($signedInEmail)" else "1. Authenticate via Google Sign-In",
+                                    label = if (isSignedIn) "1. Firebase Auth Signed In ($signedInEmail)" else "1. Sign in on the secure Admin website",
                                     done = isSignedIn
                                 )
                                 ClaimCheckStepRow(
