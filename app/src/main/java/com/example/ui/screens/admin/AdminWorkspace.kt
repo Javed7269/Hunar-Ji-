@@ -628,7 +628,7 @@ private fun AdminDashboardContent(
                             Spacer(Modifier.width(12.dp))
                             Column(modifier = Modifier.weight(1f)) {
                                 Text("Welcome Back, Admin!", style = MaterialTheme.typography.titleLarge.copy(color = Color.White, fontWeight = FontWeight.Bold))
-                                Text("Here's what's happening with your Hunar Ji platform today.", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.85f))
+                                Text("Here's what's happening with your HUNHAR JI platform today.", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.85f))
                             }
                         }
                         Row(
