@@ -377,7 +377,7 @@ fun CustomerWorkspace(
                     EmptyStateCard(
                         icon = Icons.Default.Build,
                         title = "Scheduled Maintenance",
-                        subtitle = "Hunar Ji Customer App is currently undergoing maintenance configured by Admin.",
+                        subtitle = "HUNHAR JI Customer App is currently undergoing maintenance configured by Admin.",
                         actionLabel = "Switch Workspace",
                         onAction = onOpenWorkspaceSwitcher
                     )
@@ -1671,7 +1671,7 @@ private fun CustomerWalletContent(
                 border = BorderStroke(1.dp, Color(0xFFE2E8F0))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Add Money to Hunar Ji Wallet", style = MaterialTheme.typography.titleMedium)
+                    Text("Add Money to HUNHAR JI Wallet", style = MaterialTheme.typography.titleMedium)
                     Spacer(Modifier.height(10.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         listOf("250", "500", "1000", "2000").forEach { amt ->
@@ -1715,7 +1715,7 @@ private fun CustomerWalletContent(
                 EmptyStateCard(
                     icon = Icons.Default.Wallet,
                     title = "No Transactions Yet",
-                    subtitle = "Top up your wallet or place an order using Hunar Ji Wallet to see ledger entries."
+                    subtitle = "Top up your wallet or place an order using HUNHAR JI Wallet to see ledger entries."
                 )
             }
         } else {
