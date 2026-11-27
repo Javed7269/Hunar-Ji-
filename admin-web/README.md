@@ -1,4 +1,4 @@
-# Hunar Ji Admin Control Center
+# HUNHAR JI Admin Control Center
 
 This is a static Firebase-backed Admin website. It uses the existing named Firestore database configured by the Android app and does not contain service-account credentials or payment secrets.
 
@@ -16,7 +16,7 @@ This is a static Firebase-backed Admin website. It uses the existing named Fires
 2. In Authentication → Settings → Authorized domains, add the Netlify domain used by this site.
 3. Confirm that the Firestore database ID is `ai-studio-android-hunarji-1c6adcb8-e8ca-431c-87d6-1a54bee28f29`.
 4. Deploy the repository's `firestore.rules` to that same named database.
-5. The bootstrap Admin account must be `hunarji47@gmail.com` with verified email, or another account must have the server-issued `is_admin: true` custom claim.
+5. The bootstrap Admin account must be `the approved administrator email` with verified email, or another account must have the server-issued `is_admin: true` custom claim.
 
 ## Current scope
 
