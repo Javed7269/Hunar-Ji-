@@ -101,7 +101,7 @@ fun CustomerWalletRewardsScreen(
                         .padding(20.dp)
                 ) {
                     Column {
-                        Text("Hunar Ji Cash Wallet", style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.85f))
+                        Text("HUNHAR JI Cash Wallet", style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.85f))
                         Spacer(Modifier.height(4.dp))
                         Text("₹${balance.toInt()}", style = MaterialTheme.typography.displaySmall.copy(color = Color.White, fontWeight = FontWeight.ExtraBold))
                         Spacer(Modifier.height(10.dp))
@@ -205,7 +205,7 @@ fun CustomerWalletRewardsScreen(
                         Icon(Icons.Default.Stars, contentDescription = null, tint = AccentAmber)
                         Spacer(Modifier.width(8.dp))
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("Hunar Ji Reward Points: $rewardPoints pts", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), color = TextPrimary)
+                            Text("HUNHAR JI Reward Points: $rewardPoints pts", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), color = TextPrimary)
                             Text("Non-withdrawable loyalty points earned only by completing Google AdMob rewarded videos.", style = MaterialTheme.typography.labelSmall, color = TextSecondary)
                         }
                     }
@@ -267,7 +267,7 @@ fun CustomerWalletRewardsScreen(
                 EmptyStateCard(
                     icon = Icons.Default.Wallet,
                     title = "No Cash Transactions Yet",
-                    subtitle = "Submit a verified top-up request or pay via Hunar Ji Wallet to see cash transactions."
+                    subtitle = "Submit a verified top-up request or pay via HUNHAR JI Wallet to see cash transactions."
                 )
             }
         } else {
