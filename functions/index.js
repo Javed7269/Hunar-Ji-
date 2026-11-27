@@ -156,7 +156,8 @@ exports.verifyAdminEmailOtp = onCall({ secrets: [OTP_PEPPER], enforceAppCheck: f
 });
 
 exports.endAdminSession = onCall({ enforceAppCheck: false }, async (request) => {
-  const user = requireAdmin(request);
+  const user = requireVerifiedUser(request);
+  if (request.auth.token.is_admin !== true) throw new HttpsError("permission-denied", "No Admin session is active.");
   const current = await auth.getUser(user.uid);
   const claims = { ...(current.customClaims || {}) };
   delete claims.is_admin;
