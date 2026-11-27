@@ -301,12 +301,12 @@ fun CustomerWorkspace(
         }
     ) {
         Scaffold(
-            containerColor = SurfaceLight,
+            containerColor = MaterialTheme.colorScheme.background,
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
             topBar = {
                 Column(
                     modifier = Modifier
-                        .background(Color.White)
+                        .background(MaterialTheme.colorScheme.surface)
                         .windowInsetsPadding(WindowInsets.statusBars)
                 ) {
                     HunarJiTopAppHeader(
