@@ -1,5 +1,5 @@
 
-name: Build Hunar Ji APK
+name: Build HUNHAR JI APK
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: hunar-ji-apk-${{ github.ref }}
+  group: hunhar-ji-apk-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -54,20 +54,20 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: hunar-ji-debug-apk
+          name: hunhar-ji-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 7
 
       - name: Prepare release APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk hunar-ji-debug.apk
+        run: cp app/build/outputs/apk/debug/app-debug.apk hunhar-ji-debug.apk
 
       - name: Publish installable debug APK
         uses: softprops/action-gh-release@v2
         with:
           tag_name: debug-build-${{ github.run_number }}
-          name: Hunar Ji Debug Build #${{ github.run_number }}
+          name: HUNHAR JI Debug Build #${{ github.run_number }}
           prerelease: true
           make_latest: true
-          files: hunar-ji-debug.apk
+          files: hunhar-ji-debug.apk
           
