@@ -3,7 +3,7 @@
     <style name="Theme.HunarJi" parent="android:Theme.DeviceDefault.NoActionBar">
         <item name="android:windowBackground">@drawable/hunarji_launch_background</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">#E8F1FF</item>
-        <item name="android:navigationBarColor">#FFFFFF</item>
+        <item name="android:statusBarColor">#071A45</item>
+        <item name="android:navigationBarColor">#08152F</item>
     </style>
 </resources>
