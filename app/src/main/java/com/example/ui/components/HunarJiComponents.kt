@@ -154,7 +154,7 @@ fun HunarJiBrandWordmark(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_hunarji_logo_fg),
+            painter = painterResource(id = R.drawable.ic_hunharji_logo),
             contentDescription = "HUNHAR JI logo",
             modifier = Modifier.size(36.dp),
             contentScale = ContentScale.Fit
@@ -194,7 +194,7 @@ fun HunarJiCenteredLogoHeader(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_hunarji_logo_fg),
+            painter = painterResource(id = R.drawable.ic_hunharji_logo),
             contentDescription = "HUNHAR JI logo",
             modifier = Modifier.size(logoSize),
             contentScale = ContentScale.Fit
