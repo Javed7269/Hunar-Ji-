@@ -336,7 +336,7 @@ private fun SellerDashboardContent(
         }
         // Welcome + Today's Sales Blue Card (matching Image 3)
         item {
-            Card(shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Column(modifier = Modifier.padding(14.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(modifier = Modifier.weight(1f)) {
@@ -435,7 +435,7 @@ private fun SellerKpiCard(title: String, value: String, color: Color, modifier: 
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         border = BorderStroke(1.dp, Color(0xFFE2E8F0))
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
@@ -457,7 +457,7 @@ private fun SellerQuickTile(
     Card(
         modifier = modifier.clickable(onClick = onClick),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         border = BorderStroke(1.dp, Color(0xFFE2E8F0))
     ) {
         Column(modifier = Modifier.padding(vertical = 12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -527,7 +527,7 @@ private fun SellerProductsContent(
         items(filtered, key = { it.id }) { prod ->
             Card(
                 shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 border = BorderStroke(1.dp, Color(0xFFE2E8F0))
             ) {
                 Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -608,7 +608,7 @@ private fun SellerOrdersContent(
             }
         } else {
             items(filtered, key = { it.id }) { ord ->
-                Card(shape = RoundedCornerShape(14.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                Card(shape = RoundedCornerShape(14.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                     Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                             Text("#${ord.id}", style = MaterialTheme.typography.titleSmall)
@@ -652,7 +652,7 @@ private fun SellerWalletContent(
                         Text("Available Balance", color = Color.White.copy(alpha = 0.85f))
                         Text("₹${balance.toInt()}", style = MaterialTheme.typography.displaySmall.copy(color = Color.White))
                     }
-                    Button(onClick = onWithdraw, colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = BrandBlueDark)) {
+                    Button(onClick = onWithdraw, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = BrandBlueDark)) {
                         Text("Withdraw")
                     }
                 }
@@ -665,7 +665,7 @@ private fun SellerWalletContent(
             }
         }
         items(transactions, key = { it.id }) { tx ->
-            Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(tx.title, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
                     Text("₹${tx.amount.toInt()}", style = MaterialTheme.typography.titleMedium, color = BrandBlueDark)
@@ -701,7 +701,7 @@ private fun SellerAnalyticsContent(
             )
         }
         item {
-            Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Sales Overview", style = MaterialTheme.typography.titleLarge)
                     Spacer(Modifier.height(10.dp))
@@ -714,7 +714,7 @@ private fun SellerAnalyticsContent(
             }
         }
         item {
-            Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Text("Top Products (${products.size}) • Orders (${orders.size})", style = MaterialTheme.typography.titleMedium)
                     products.take(4).forEachIndexed { idx, p ->
